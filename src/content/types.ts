@@ -46,6 +46,15 @@ export type ProjectStatus =
   /** Textes prêts, visuels manquants : afficher un placeholder sobre. */
   | "visuals-pending";
 
+/**
+ * Catégories des filtres de l'accueil. Le slug sert aussi de lien partageable :
+ * /?focus=design-system#projets ouvre l'accueil déjà filtré.
+ * Ajouter une catégorie : l'ajouter ici, lui donner un libellé dans
+ * site.filters (src/content/fr/site.ts), puis la poser sur les projets.
+ */
+export type SkillCategory = "design-system" | "recherche" | "logiciel-metier" | "mobile" | "ia";
+export type SectorCategory = "industrie-iot" | "pharma" | "logistique" | "grand-public";
+
 export interface CaseStudy {
   slug: string;
   /** Numéro affiché ("01"). Détermine aussi l'ordre. */
@@ -71,6 +80,10 @@ export interface CaseStudy {
   team?: string[];
   tools: string[];
   tags: string[];
+  /** Compétences démontrées par le projet (filtres de l'accueil). */
+  skills: SkillCategory[];
+  /** Secteurs du projet (filtres de l'accueil). */
+  sectors: SectorCategory[];
 
   /** Le défi, en une ou deux phrases. */
   challenge?: string;
@@ -132,6 +145,19 @@ export interface SiteContent {
   location: string;
   meta: { title: string; description: string };
   nav: NavItem[];
+  /** Filtres de la liste de projets (accueil). */
+  filters: {
+    /** Nom du groupe de filtres, pour les lecteurs d'écran. */
+    groupLabel: string;
+    skillsLabel: string;
+    sectorsLabel: string;
+    showAll: string;
+    /** « 1 projet » / « {n} projets » (n remplacé à l'affichage). */
+    countOne: string;
+    countMany: string;
+    skills: Record<SkillCategory, string>;
+    sectors: Record<SectorCategory, string>;
+  };
   contact: {
     email: string;
     linkedin: string;

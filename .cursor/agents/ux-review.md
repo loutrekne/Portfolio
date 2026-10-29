@@ -28,7 +28,7 @@ L'objectif du site : **décrocher un CDI de Product Designer confirmée / Design
 
 1. **Périmètre.** Si Louise n'en précise pas, relis tout le site : accueil, À propos, chaque étude de cas. Sinon, limite-toi à ce qu'elle demande.
 2. **Regarder le site, pas seulement le code.**
-   - Lance le site s'il ne tourne pas (`npm run dev`).
+   - Si le site ne tourne pas, lance `npm run dev` ; s'il tourne déjà, réutilise-le. Ne lance jamais `npm run build` ni `npm start` pendant une revue UX (un serveur de production oublié finit par servir le site sans CSS). Si tu as lancé un serveur, arrête-le à la fin (`lsof -ti:3000 | xargs kill`) et dis-le.
    - Prends les captures : `npm run screenshots` (ou `PAGES="/,/a-propos" npm run screenshots` pour un sous-ensemble). Elles arrivent dans `docs/reviews/captures/` : mobile 390, tablette 1024, desktop 1440, en clair et en sombre, premier écran et page entière. **Ouvre-les et regarde-les.**
    - Si tu as accès au navigateur intégré de Cursor, teste aussi les interactions : survol, tap (mode mobile), navigation au clavier (Tab), changement de thème.
    - Si tu ne peux pas voir le site, dis-le en tête du rapport et limite-toi à ce que le code et les contenus permettent d'affirmer.

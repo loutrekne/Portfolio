@@ -125,10 +125,11 @@ Le site est en français. Pour ajouter l'anglais :
 - **Études de cas** : nouveau gabarit (bandeau de fiche projet, « En bref » avec défi + chiffres, sommaire collant qui suit la lecture, projet suivant).
 - **Mobile** : retours visuels à l'appui, aucun effet de survol collé, correctif iOS `:active`.
 - Typographie française automatique (`fr()`).
+- TechniCenter passé en étude de cas complète (6 projets), filtres compétence / secteur avec liens recruteurs (§11).
 - Agents de revue Cursor `ux-review` et `a11y-audit` (§10) ; audit axe : 0 violation sur 7 pages × 4 configurations.
 
 ⏳ À faire, par priorité
-1. **Visuels** : extraire du Book 2026 ce qui existe, compléter avec des captures (avant/après TechniCenter, panneau Variables Figma…). Les placer dans `public/images/projects/<slug>/`, renseigner `cover`/`media` (avec `width`/`height`), passer `status` à `"ready"`.
+1. **Visuels** : extraire du Book 2026 ce qui existe, compléter avec des captures (TechniCenter : `cover.png`, `avant-machine.png`, `avant-ticket.png`, `apres-fiche-machine.png` ; panneau Variables Figma…). Les placer dans `public/images/projects/<slug>/`, renseigner `cover`/`media` (avec `width`/`height`), passer `status` à `"ready"`.
 2. **Faits à compléter** (`grep -rn "TODO(louise)" src`).
 3. Domaine personnalisé + `metadataBase`.
 4. Images Open Graph par projet (`opengraph-image.tsx`), `sitemap.ts`, `robots.ts`.
@@ -160,7 +161,7 @@ Le motif du site est **le trait dessiné à la main**, en terracotta, qui prolon
 | `DrawnUnderline` | Soulignement au feutre au survol (CSS pur, utilisable côté serveur) : nav, footer, bouton « ghost » |
 | `PortraitSticker` | Portrait du hero, sans arche : encre + passage terracotta décalé (effet risographie) qui suit la souris ; se tire à la souris (élastique). Thème sombre : même dessin à l'encre, sur une arche craie (`--portrait-sheet`). Le hero le superpose au texte (même rangée de grille, à partir de xl) |
 | `PortraitDrawing` | Le dessin qui se trace (contours de haut en bas, puis l'encre), puis cligne des yeux et suit la souris ; un clic le redessine. Option `wash` : passage terracotta décalé. Encre = `--portrait-ink` (toujours encre : un dessin inversé en blanc donne un négatif). Données générées dans `portrait-paths.ts` |
-| `ProjectRows` | Liste des projets, visiblement cliquable au repos : pastille flèche (desktop) ou « Lire l'étude de cas → » (mobile). Titre souligné au survol / à l'appui + pastille « Voir le projet → » qui suit la souris |
+| `ProjectRows` | Liste des projets filtrable (§11), visiblement cliquable au repos : pastille flèche (desktop) ou « Lire l'étude de cas → » (mobile). Titre souligné au survol / à l'appui + pastille « Voir le projet → » qui suit la souris |
 
 Règles : un trait répond à un geste ou accompagne une arrivée, jamais en boucle. Sur écran tactile, pas de pastille ni de glisser ; un tap dans l'en-tête pince la corde (HeaderString). Les tracés utilisent `pathLength={1}` + `strokeDashoffset` **sans** `vector-effect="non-scaling-stroke"` (Chrome découpe le trait en pointillés sinon).
 
@@ -174,3 +175,23 @@ Deux sous-agents dans `.cursor/agents/`, à appeler dans le chat de Cursor. Ils 
 | `a11y-audit` | `/a11y-audit` | WCAG 2.2 A + AA. Test automatique `npm run a11y` (axe, 4 configurations), puis vérification manuelle : clavier, structure, alternatives, contrastes, mouvement, tactile, zoom, lecteur d'écran. Rapport : `docs/reviews/AAAA-MM-JJ-a11y.md` |
 
 Les captures et le JSON d'axe sont ignorés par Git ; les rapports `.md` sont versionnés.
+
+## 11. Filtres et liens recruteurs
+
+La liste « Projets sélectionnés » se filtre par **compétence** ou par **secteur** (un filtre à la fois). Le filtre actif est écrit dans l'URL : on copie l'adresse et on l'envoie, la page s'ouvre déjà filtrée.
+
+| Pour un poste orienté… | Lien (ajouter le domaine devant) |
+|---|---|
+| Design system | `/?focus=design-system#projets` |
+| Recherche, discovery | `/?focus=recherche#projets` |
+| Logiciel métier, SaaS B2B | `/?focus=logiciel-metier#projets` |
+| Mobile | `/?focus=mobile#projets` |
+| IA, design engineering | `/?focus=ia#projets` |
+| Industrie, IoT | `/?focus=industrie-iot#projets` |
+| Pharma, santé | `/?focus=pharma#projets` |
+| Logistique | `/?focus=logistique#projets` |
+| Grand public (B2C) | `/?focus=grand-public#projets` |
+
+- Catégories : types `SkillCategory` / `SectorCategory` (`src/content/types.ts`), libellés dans `site.filters` (`src/content/fr/site.ts`), et champs `skills` / `sectors` dans chaque fichier projet.
+- Une catégorie sans projet n'est pas affichée. Un `focus` inconnu est ignoré (liste complète).
+- Composants : `ProjectFilters` (pastilles, `aria-pressed`, nombre annoncé) et `ProjectRows` (l'URL est la source de vérité, via `useSyncExternalStore`).

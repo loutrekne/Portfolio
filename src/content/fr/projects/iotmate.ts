@@ -16,6 +16,8 @@ export const project: CaseStudy = {
     role: "Product Designer — dashboards",
     tools: ["Figma"],
     tags: ["Dashboard", "Data viz"],
+    skills: ["logiciel-metier"],
+    sectors: ["industrie-iot"],
     sections: [],
     outcomes: [],
   };

@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
  * variant :
  *  - "circle"    : ellipse au feutre autour d'un mot (hero)
  *  - "underline" : soulignement ondulé (titres de projets)
- *  - "arrow"     : flèche courbe (note « c'est moi ! »)
+ *  - "arrow"     : flèche courbe
  * mode :
  *  - "mount"  : se dessine à l'affichage
  *  - "inView" : se dessine quand il entre à l'écran

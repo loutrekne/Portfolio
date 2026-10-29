@@ -16,6 +16,8 @@ export const project: CaseStudy = {
     role: "Product Designer & Design Engineer — audit UX, specs, prototype piloté par IA",
     tools: ["Markdown", "Agent IA", "React", "Feuille de style du design system"],
     tags: ["Audit UX", "Prototype", "Agents IA", "Design engineering"],
+    skills: ["recherche", "logiciel-metier", "ia"],
+    sectors: ["industrie-iot"],
     challenge:
     "Plusieurs logiciels connectés entre eux, sans design system commun : chacun avait son propre style, daté et peu intuitif. Avant d'engager une refonte complète, il fallait vérifier avec le client que la nouvelle direction lui correspond.",
     sections: [

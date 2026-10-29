@@ -27,6 +27,9 @@ export function HeaderShell({ children }: { children: React.ReactNode }) {
       });
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    // Arrivée directe au milieu de la page (lien #projets, rechargement) :
+    // le fond doit être là tout de suite, sans attendre un premier défilement
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 

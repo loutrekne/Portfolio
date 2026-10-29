@@ -22,6 +22,8 @@ export const project: CaseStudy = {
     ],
     tools: ["Figma", "Prototypage interactif"],
     tags: ["SCADA", "Industrie", "Design system", "Prototypage"],
+    skills: ["recherche", "logiciel-metier", "design-system"],
+    sectors: ["pharma", "industrie-iot"],
     challenge:
       "Rendre pilotable un système industriel complexe par six profils aux besoins divergents, dans un environnement pharmaceutique où l'erreur coûte cher.",
     sections: [

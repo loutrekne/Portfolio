@@ -28,6 +28,8 @@ export const project: CaseStudy = {
       "YouTrack",
     ],
     tags: ["Design system", "Design engineering", "Agents IA", "Design ops"],
+    skills: ["design-system", "ia"],
+    sectors: ["industrie-iot"],
     challenge:
       "Un seul design system doit servir 4 produits, plusieurs marques clientes et deux modes d'affichage, avec une équipe dev qui livre en Blazor et une seule designer côté produit.",
     sections: [

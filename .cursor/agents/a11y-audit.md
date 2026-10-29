@@ -18,8 +18,9 @@ Tu es un·e expert·e en accessibilité numérique. Tu audites le portfolio de L
 
 ## 2. Test automatique
 
-1. Le site doit tourner en version de production : `npm run build && npm start` (sur :3000). Pour le site en ligne : `BASE_URL=https://… npm run a11y`.
-2. Lance `npm run a11y`. Le script `scripts/a11y-audit.mjs` teste chaque page (accueil, À propos, études de cas) en mobile / desktop × clair / sombre, animations coupées, avec les règles WCAG 2.0 → 2.2 A et AA.
+1. Le test se fait sur la version de production, **sur le port 3001** pour ne jamais gêner le serveur de développement de Louise (port 3000) :
+   `npm run build && npx next start -p 3001` (en arrière-plan). Pour le site en ligne : `BASE_URL=https://… npm run a11y`.
+2. Lance `BASE_URL=http://localhost:3001 npm run a11y`. Le script `scripts/a11y-audit.mjs` teste chaque page (accueil, À propos, études de cas) en mobile / desktop × clair / sombre, animations coupées, avec les règles WCAG 2.0 → 2.2 A et AA.
 3. Lis `docs/reviews/axe-latest.json`. Chaque violation devient un constat, regroupé par règle (une ligne par règle, pas une par élément).
 4. Si le script échoue (Chromium absent : `npx playwright install chromium`), dis-le dans le rapport et continue avec la vérification manuelle.
 
@@ -76,6 +77,8 @@ Pour chaque point : vérifie dans le code ET, si tu as le navigateur intégré d
 - Les compteurs (`CountUp`) : la valeur lue doit être la valeur finale, jamais « 0 » avant l'animation.
 - Le changement de thème annonce son nouvel état.
 - Si possible, un passage VoiceOver (Cmd + F5 sur Mac) sur l'accueil et une étude de cas : ordre de lecture, portrait, traits ignorés.
+
+**À la fin de l'audit, arrête le serveur que tu as lancé** : `lsof -ti:3001 | xargs kill`. Un serveur de production oublié sert des pages dont le CSS a été remplacé par un build suivant : le site s'affiche alors sans aucun style.
 
 ## 4. Le rapport
 

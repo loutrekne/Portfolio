@@ -18,6 +18,27 @@ export const site: SiteContent = {
     { label: "À propos", href: "/a-propos" },
     { label: "Contact", href: "/#contact" },
   ],
+  filters: {
+    groupLabel: "Filtrer les projets",
+    skillsLabel: "Compétence",
+    sectorsLabel: "Secteur",
+    showAll: "Tout afficher",
+    countOne: "1 projet",
+    countMany: "{n} projets",
+    skills: {
+      "design-system": "Design system",
+      recherche: "Recherche & discovery",
+      "logiciel-metier": "Logiciel métier",
+      mobile: "Mobile",
+      ia: "IA & design engineering",
+    },
+    sectors: {
+      "industrie-iot": "Industrie & IoT",
+      pharma: "Pharma · santé",
+      logistique: "Logistique",
+      "grand-public": "Grand public",
+    },
+  },
   contact: {
     email: "louise.knoery@gmail.com",
     linkedin: "https://www.linkedin.com/in/louise-knoery/",

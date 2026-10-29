@@ -18,6 +18,8 @@ export const project: CaseStudy = {
     team: ["Aymeric Bianco Pellé — Lead Product Designer", "Louise Knoery — Product Designer"],
     tools: ["Figma", "FigJam", "Jira"],
     tags: ["SaaS B2B", "Logistique", "Design system", "Recherche"],
+    skills: ["recherche", "logiciel-metier", "design-system"],
+    sectors: ["logistique"],
     challenge:
       "Une chaîne de transport fragmentée (modes, escales, retards) et des clients qui veulent une seule chose : savoir où est leur marchandise, et ce qu'elle leur coûte.",
     sections: [

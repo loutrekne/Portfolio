@@ -16,6 +16,8 @@ export const project: CaseStudy = {
     role: "Product Designer — discovery, benchmark, UX/UI mobile, thèmes multi-marques",
     tools: ["Figma", "Figma Variables", "Analyse qualitative", "Benchmark fonctionnel"],
     tags: ["Discovery", "Mobile", "IoT", "Multi-marques"],
+    skills: ["recherche", "mobile", "design-system"],
+    sectors: ["industrie-iot", "grand-public"],
     challenge:
       "Des notes de 1,9★ sur iOS et 2,7★ sur Android. La tentation : refaire l'interface. La question : est-ce vraiment elle que les utilisateurs rejettent ?",
     sections: [
