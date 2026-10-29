@@ -25,7 +25,7 @@ export const project: CaseStudy = {
         heading: "Partir de l'existant",
         body: [
           "La mission démarre par un audit UX du logiciel de gestion des pesées : liste des pesées, transactions, configuration des utilisateurs et du matériel.",
-          // TODO(louise) : 2–3 constats clés de l'audit (ex. lisibilité des statuts, filtres, densité de la liste).
+          "Le constat : pas de design system. Chaque logiciel avait sa propre apparence, avec des interfaces d'une autre époque, peu lisibles et peu engageantes au quotidien. Plutôt que de tout redessiner d'emblée, on a construit d'abord un POC : vérifier qu'il correspond à leurs usages, puis bâtir la suite ensemble, sur une base commune.",
         ],
       },
       {
