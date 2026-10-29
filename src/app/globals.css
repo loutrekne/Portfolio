@@ -1,0 +1,263 @@
+/**
+ * Styles globaux.
+ * Tailwind v4 est configuré en CSS ("CSS-first") : il n'y a PAS de
+ * tailwind.config.js. `@theme inline` fait office de config et mappe les
+ * tokens agnostiques (src/styles/tokens.css) vers des utilitaires Tailwind :
+ * bg-bg, text-fg, text-fg-muted, border-border, text-accent, bg-highlight…
+ *
+ * En bas de fichier : les MICRO-INTERACTIONS en CSS pur (surligneur, boutons
+ * à ressort, apparitions au scroll, barre de lecture). Elles sont toutes
+ * neutralisées par `prefers-reduced-motion`.
+ */
+@import "tailwindcss";
+@import "../styles/tokens.css";
+
+/* `dark:` piloté par <html data-theme="dark"> (rarement utile : les tokens suivent déjà le système). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-highlight: var(--highlight);
+  --color-on-highlight: var(--on-highlight);
+  --color-btn: var(--btn-bg);
+  --color-btn-fg: var(--btn-fg);
+  --color-success: var(--success);
+
+  /* Une seule famille, injectée par next/font (layout.tsx) */
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --text-display: var(--fs-display);
+  --text-display--line-height: var(--leading-tight);
+  --text-display--letter-spacing: var(--tracking-display);
+  --text-h1: var(--fs-h1);
+  --text-h1--line-height: var(--leading-tight);
+  --text-h1--letter-spacing: var(--tracking-display);
+  --text-h2: var(--fs-h2);
+  --text-h2--line-height: var(--leading-snug);
+  --text-h2--letter-spacing: var(--tracking-heading);
+  --text-h3: var(--fs-h3);
+  --text-h3--line-height: var(--leading-snug);
+  --text-h3--letter-spacing: var(--tracking-heading);
+  --text-lead: var(--fs-lead);
+  --text-lead--line-height: 1.55;
+  --text-body: var(--fs-body);
+  --text-body--line-height: var(--leading-body);
+  --text-small: var(--fs-small);
+  --text-small--line-height: 1.55;
+  --text-label: var(--fs-label);
+  --text-label--line-height: 1.4;
+
+  --radius-sm: var(--rounded-sm);
+  --radius-md: var(--rounded-md);
+  --radius-lg: var(--rounded-lg);
+  --radius-pill: var(--rounded-pill);
+
+  --shadow-soft: var(--shadow-soft);
+  --ease-out: var(--ease-standard);
+  --ease-spring: var(--ease-spring);
+  --ease-bounce: var(--ease-bounce);
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family:
+      var(--font-figtree),
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
+    font-size: var(--fs-body);
+    line-height: var(--leading-body);
+    text-rendering: optimizeLegibility;
+    /* transition douce lors du changement de thème */
+    transition:
+      background-color var(--duration-base) var(--ease-standard),
+      color var(--duration-base) var(--ease-standard);
+  }
+  ::selection {
+    background: var(--highlight);
+    color: var(--on-highlight);
+  }
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: var(--rounded-sm);
+  }
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+@utility container-site {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+@utility section-y {
+  padding-block: var(--space-section);
+}
+@utility measure {
+  max-width: var(--measure);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   MICRO-INTERACTIONS
+   Principe : chaque mouvement répond à un geste (survol, clic, scroll) et
+   confirme quelque chose. Rien ne bouge "pour décorer".
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* 1 · Coup de surligneur — liens et titres cliquables.
+   Le fond se dessine de gauche à droite sous le texte, comme au feutre.
+   Usage : <span className="mark">…</span> (dans un parent .group ou en lien). */
+@utility mark {
+  background-image: linear-gradient(var(--highlight), var(--highlight));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 0% 0.42em;
+  transition: background-size var(--duration-spring) var(--ease-spring);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  :where(a, button, .group):hover &,
+  :where(a, button, .group):focus-visible &,
+  &:is(a):hover,
+  &:is(a):focus-visible {
+    background-size: 100% 0.42em;
+  }
+}
+/* Variante statique : un mot surligné en permanence (hero). */
+@utility mark-static {
+  background-image: linear-gradient(var(--highlight), var(--highlight));
+  background-repeat: no-repeat;
+  background-position: 0 90%;
+  background-size: 100% 0.38em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* 2 · Bouton à ressort : se soulève au survol, s'enfonce au clic,
+   revient avec un petit rebond. La flèche glisse vers l'avant. */
+@utility btn-spring {
+  transition:
+    transform var(--duration-spring) var(--ease-bounce),
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-soft);
+  }
+  &:active {
+    transform: translateY(0) scale(0.96);
+    transition-duration: 90ms;
+  }
+  & .arrow {
+    display: inline-block;
+    transition: transform var(--duration-spring) var(--ease-spring);
+  }
+  &:hover .arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* 3 · Pastille "disponible" qui respire doucement. */
+@keyframes breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--success) 0%, transparent);
+  }
+}
+@utility breathe {
+  animation: breathe 2.8s var(--ease-standard) infinite;
+}
+
+/* 4 · Apparition au scroll — pilotée par <RevealObserver /> (layout.tsx).
+   Sans JS, rien n'est masqué : data-reveal n'est posé que par le script. */
+.reveal[data-reveal] {
+  transition:
+    opacity var(--duration-slow) var(--ease-standard),
+    transform var(--duration-slow) var(--ease-spring);
+}
+.reveal[data-reveal="pending"] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+/* 5 · Barre de lecture des études de cas — liée au scroll, sans JS. */
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@utility reading-progress {
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  @supports (animation-timeline: scroll()) {
+    animation: grow-x linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+/* 6 · Carte qui se soulève (principes, autres projets). */
+@utility lift {
+  transition:
+    transform var(--duration-spring) var(--ease-spring),
+    border-color var(--duration-base) var(--ease-standard),
+    box-shadow var(--duration-base) var(--ease-standard);
+  &:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-soft);
+  }
+}
+
+/* Accessibilité : tout s'arrête si l'utilisateur préfère moins de mouvement. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Coche de confirmation (CopyEmailButton) : le trait se dessine. */
+@keyframes draw-check {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

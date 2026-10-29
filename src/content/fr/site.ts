@@ -1,0 +1,60 @@
+import type { SiteContent } from "../types";
+
+/**
+ * Contenu global du site (FR).
+ * TODO(louise) : renseigner email, LinkedIn et déposer le CV PDF dans /public/cv/.
+ */
+export const site: SiteContent = {
+  name: "Louise Knoery",
+  role: "Product Designer & Design Engineer",
+  location: "Lyon",
+  meta: {
+    title: "Louise Knoery — Product Designer & Design Engineer",
+    description:
+      "Product Designer & Design Engineer à Lyon. Je conçois avec les équipes des logiciels métiers simples à prendre en main, et des design systems qui tiennent jusqu'au code.",
+  },
+  nav: [
+    { label: "Projets", href: "/#projets" },
+    { label: "À propos", href: "/a-propos" },
+    { label: "Contact", href: "/#contact" },
+  ],
+  contact: {
+    email: "TODO@email.fr",
+    linkedin: "https://www.linkedin.com/in/TODO",
+    cvHref: "/cv/louise-knoery-cv.pdf",
+    ctaTitle: "Construisons quelque chose d'utile, ensemble.",
+    ctaText:
+      "Je cherche une équipe produit où l'on conçoit à plusieurs : designers, devs, PO et utilisateurs autour de la même table. Pour livrer des produits simples à utiliser, et bien faits. En CDI, à Lyon ou en remote.",
+  },
+  ui: {
+    skipLink: "Aller au contenu",
+    copied: "Adresse copiée",
+    themeLight: "Passer en mode clair",
+    themeDark: "Passer en mode sombre",
+    contact: "Contact",
+    seeProjects: "Voir les projets",
+    contactMe: "Me contacter",
+    downloadCv: "Télécharger le CV",
+    selectedWork: "Projets sélectionnés",
+    otherWork: "Aussi chez Ingeli",
+    howIWork: "Comment je travaille",
+    readCase: "Lire l'étude de cas",
+    nextProject: "Projet suivant",
+    backHome: "Retour à l'accueil",
+    client: "Client",
+    period: "Période",
+    role: "Rôle",
+    team: "Équipe",
+    tools: "Outils",
+    challenge: "Le défi",
+    outcomes: "En chiffres",
+    visualsPending: "Visuels en préparation",
+    skills: "Compétences",
+    experience: "Parcours",
+    education: "Formation",
+    certifications: "Certifications",
+    languages: "Langues",
+    notFoundTitle: "Cette page n'existe pas.",
+    notFoundText: "Le lien est peut-être ancien. Les projets, eux, sont toujours là.",
+  },
+};

@@ -1,0 +1,231 @@
+/**
+ * ─────────────────────────────────────────────────────────────────────────
+ *  DESIGN TOKENS — Louise Knoery Portfolio · v2 « Naturel & minimaliste »
+ * ─────────────────────────────────────────────────────────────────────────
+ *  Fichier AGNOSTIQUE DU FRAMEWORK : uniquement des CSS custom properties.
+ *  Tailwind les consomme via `@theme inline` (src/app/globals.css).
+ *
+ *  Intention : un site humain, calme, qui fait du bien à parcourir.
+ *  - Neutres chauds "papier & encre" (pas de gris bleuté de dashboard SaaS).
+ *  - UN accent : il porte les boutons, les index et le "coup de surligneur".
+ *  - Formes douces, mouvements à ressort, jamais gratuits.
+ *
+ *  4 couches :
+ *   1. Primitives  (--p-*)  : neutres papier/encre.
+ *   2. Palettes             : 4 accents au choix via <html data-palette="…"> :
+ *                             marine (défaut), roi, terracotta, lavande.
+ *                             → Une fois le choix fait, supprimer les autres.
+ *   3. Sémantiques (--*)    : rôle d'usage, clair + sombre.
+ *   4. Échelles             : typo, espace, formes, mouvement.
+ *
+ *  Thème : suit `prefers-color-scheme`, forçable via <html data-theme="light|dark">.
+ *  Contrastes vérifiés WCAG AA (docs/design-system.md).
+ * ─────────────────────────────────────────────────────────────────────────
+ */
+
+:root {
+  /* 1 · PRIMITIVES — papier & encre ──────────────────────────────────── */
+  --p-paper: #f7f6f2; /* fond : blanc cassé chaud, pas crème */
+  --p-paper-2: #efede7;
+  --p-white: #ffffff;
+  --p-line: #e4e1d9;
+  --p-line-2: #cfcbc1;
+  --p-stone: #6b695f;
+  --p-graphite: #5d5b54;
+  --p-ink: #1c1b18; /* texte : encre chaude, pas noir pur */
+
+  --p-night: #151513;
+  --p-night-2: #1d1c19;
+  --p-night-3: #26251f;
+  --p-night-line: #2c2b26;
+  --p-night-line-2: #3d3b34;
+  --p-fog: #8f8c82;
+  --p-ash: #a6a398;
+  --p-chalk: #eeece6;
+
+  /* Signaux — statuts uniquement (pastille "disponible", data viz) */
+  --p-green: #3f8f5a;
+  --p-amber: #b7791f;
+  --p-red: #c2412d;
+
+  /* 2 · PALETTE PAR DÉFAUT — « Marine » (bleu navy) ──────────────────── */
+  --accent: #1f3a68; /* texte accent — 10.4:1 */
+  --highlight: #c9d6ef; /* fond du "coup de surligneur" */
+  --on-highlight: var(--p-ink);
+  --btn-bg: #1f3a68; /* bouton principal dans la couleur d'accent */
+  --btn-fg: #ffffff; /* 11.3:1 */
+
+  /* 3 · SÉMANTIQUES — clair ──────────────────────────────────────────── */
+  --bg: var(--p-paper);
+  --surface: var(--p-white);
+  --surface-muted: var(--p-paper-2);
+  --fg: var(--p-ink);
+  --fg-muted: var(--p-graphite); /* 6.3:1 */
+  --fg-subtle: var(--p-stone); /* 5.1:1 */
+  --border: var(--p-line);
+  --border-strong: var(--p-line-2);
+  --focus: var(--accent);
+  --success: var(--p-green);
+  --shadow-soft: 0 1px 2px rgb(28 27 24 / 0.04), 0 8px 24px -12px rgb(28 27 24 / 0.12);
+
+  /* 4 · ÉCHELLES ───────────────────────────────────────────────────────── */
+  /* Typo fluide (375 → 1440 px). Une seule famille : Figtree. */
+  --fs-display: clamp(2.625rem, 1.6rem + 4.6vw, 5.5rem); /* 42 → 88 */
+  --fs-h1: clamp(2.25rem, 1.5rem + 3.2vw, 4.25rem); /* 36 → 68 */
+  --fs-h2: clamp(1.625rem, 1.25rem + 1.6vw, 2.625rem); /* 26 → 42 */
+  --fs-h3: clamp(1.1875rem, 1.1rem + 0.4vw, 1.5rem); /* 19 → 24 */
+  --fs-lead: clamp(1.125rem, 1.03rem + 0.4vw, 1.3125rem); /* 18 → 21 */
+  --fs-body: 1.0625rem; /* 17 */
+  --fs-small: 0.9375rem; /* 15 */
+  --fs-label: 0.875rem; /* 14 — labels en casse normale, plus humains que des capitales */
+
+  --leading-tight: 1.04;
+  --leading-snug: 1.2;
+  --leading-body: 1.65;
+  --tracking-display: -0.03em;
+  --tracking-heading: -0.018em;
+  --tracking-label: 0;
+
+  --space-section: clamp(5rem, 3rem + 8vw, 9rem);
+  --space-block: clamp(2.5rem, 2rem + 2vw, 4rem);
+  --gutter: clamp(1.25rem, 0.6rem + 2.4vw, 2.5rem);
+  --container: 76rem; /* 1216 */
+  --measure: 64ch;
+
+  /* Formes : douces, rassurantes */
+  --rounded-sm: 0.5rem; /* 8  — tags, champs */
+  --rounded-md: 0.875rem; /* 14 — cartes */
+  --rounded-lg: 1.25rem; /* 20 — visuels */
+  --rounded-pill: 999px; /* boutons */
+
+  /* Mouvement — ressorts en CSS pur (fonction linear()), zéro librairie */
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1); /* sortie douce */
+  /* ressort amorti (ζ 0.7) : léger dépassement de 4 % — survols, apparitions */
+  --ease-spring: linear(
+    0,
+    0.175,
+    0.488,
+    0.759,
+    0.933,
+    1.018,
+    1.045,
+    1.041,
+    1.028,
+    1.014,
+    1.005,
+    1,
+    0.998,
+    0.998,
+    0.999,
+    1
+  );
+  /* ressort joueur (ζ 0.55) : dépassement de 12 % — clic, confirmation */
+  --ease-bounce: linear(
+    0,
+    0.185,
+    0.538,
+    0.853,
+    1.047,
+    1.122,
+    1.116,
+    1.075,
+    1.032,
+    1.001,
+    0.987,
+    0.984,
+    0.988,
+    0.994,
+    0.999,
+    1
+  );
+  --duration-fast: 160ms;
+  --duration-base: 320ms;
+  --duration-spring: 520ms;
+  --duration-slow: 700ms;
+}
+
+/* PALETTES ALTERNATIVES (clair) ──────────────────────────────────────── */
+:root[data-palette="roi"] {
+  --accent: #2550c0; /* bleu roi — 6.5:1 */
+  --highlight: #c8d6fa;
+  --btn-bg: #2550c0; /* blanc dessus : 7.0:1 */
+}
+:root[data-palette="terracotta"] {
+  --accent: #a8492a; /* 5.3:1 */
+  --highlight: #f1c9b6;
+  --btn-bg: #a8492a; /* blanc dessus : 5.8:1 */
+}
+:root[data-palette="lavande"] {
+  --accent: #5f4f9e; /* 6.3:1 */
+  --highlight: #d9cff2;
+  --btn-bg: #5f4f9e; /* blanc dessus : 6.8:1 */
+}
+
+/* SÉMANTIQUES — sombre ───────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: var(--p-night);
+    --surface: var(--p-night-2);
+    --surface-muted: var(--p-night-3);
+    --fg: var(--p-chalk);
+    --fg-muted: var(--p-ash); /* 7.2:1 */
+    --fg-subtle: var(--p-fog); /* 5.4:1 */
+    --border: var(--p-night-line);
+    --border-strong: var(--p-night-line-2);
+    --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px -14px rgb(0 0 0 / 0.6);
+    --on-highlight: var(--p-chalk);
+    --btn-fg: var(--p-night);
+    /* Marine (défaut) */
+    --accent: #9db6e3; /* 8.9:1 */
+    --highlight: #2f4c80; /* texte clair dessus : 7.2:1 */
+    --btn-bg: #c9d7f0; /* texte nuit dessus : 12.6:1 */
+  }
+  :root[data-palette="roi"]:not([data-theme="light"]) {
+    --accent: #8faaf2;
+    --highlight: #2d46a0;
+    --btn-bg: #c4d3fa;
+  }
+  :root[data-palette="terracotta"]:not([data-theme="light"]) {
+    --accent: #eba283;
+    --highlight: #83402a;
+    --btn-bg: #f2c6b2;
+  }
+  :root[data-palette="lavande"]:not([data-theme="light"]) {
+    --accent: #bcb0ee;
+    --highlight: #55488c;
+    --btn-bg: #d9d1f7;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: var(--p-night);
+  --surface: var(--p-night-2);
+  --surface-muted: var(--p-night-3);
+  --fg: var(--p-chalk);
+  --fg-muted: var(--p-ash); /* 7.2:1 */
+  --fg-subtle: var(--p-fog); /* 5.4:1 */
+  --border: var(--p-night-line);
+  --border-strong: var(--p-night-line-2);
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px -14px rgb(0 0 0 / 0.6);
+  --on-highlight: var(--p-chalk);
+  --btn-fg: var(--p-night);
+  /* Marine (défaut) */
+  --accent: #9db6e3; /* 8.9:1 */
+  --highlight: #2f4c80; /* texte clair dessus : 7.2:1 */
+  --btn-bg: #c9d7f0; /* texte nuit dessus : 12.6:1 */
+}
+:root[data-theme="dark"][data-palette="roi"] {
+  --accent: #8faaf2;
+  --highlight: #2d46a0;
+  --btn-bg: #c4d3fa;
+}
+:root[data-theme="dark"][data-palette="terracotta"] {
+  --accent: #eba283;
+  --highlight: #83402a;
+  --btn-bg: #f2c6b2;
+}
+:root[data-theme="dark"][data-palette="lavande"] {
+  --accent: #bcb0ee;
+  --highlight: #55488c;
+  --btn-bg: #d9d1f7;
+}
