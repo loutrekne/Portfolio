@@ -112,27 +112,25 @@ Le site est en français. Pour ajouter l'anglais :
 3. Ajouter le routing par langue (`app/[locale]/…`) en suivant `node_modules/next/dist/docs/01-app/02-guides/internationalization.md` ; FR reste sans préfixe.
 4. Ajouter un sélecteur de langue dans `SiteHeader` et les `alternates.languages` dans les metadata.
 
-## 7. État actuel (29/10/2026, v2)
+## 7. État actuel (29/10/2026, v3)
 
 ✅ Fait
-- Squelette Next.js 16 + Tailwind 4 + TS, build vérifié (11 pages statiques)
-- v2 : direction naturelle et minimaliste (papier & encre, Figtree, accent terracotta)
-- Micro-interactions : surligneur, boutons à ressort, copie d'email, compteurs, apparitions, header discret, barre de lecture, bascule de thème sans flash
-- Textes recentrés sur la collaboration et l'utilisabilité (hero, principes, contact)
-- Design tokens clair/sombre (suit le système, forçable), contrastes AA vérifiés
-- Palette unique terracotta (marine, roi et lavande retirées)
-- Tous les textes FR : hero, à propos, 4 principes, 5 études de cas, 2 projets courts, parcours
-- Gabarits : accueil, étude de cas, à propos, 404
+- Next.js 16 + Tailwind 4 + TS + Motion. En ligne sur Vercel (https://portfolio-xi-ruby-36.vercel.app/), dépôt GitHub loutrekne/Portfolio.
+- Direction naturelle et minimaliste : papier & encre, Figtree, accent unique terracotta, thèmes clair / sombre sans flash, contrastes AA.
+- **Le trait** (§9) : corde du header (souris + tap), séparateurs dessinés, soulignements au feutre, cercle du hero.
+- **Hero** : portrait dessiné qui se trace, cligne et suit la souris, avec passage terracotta décalé (risographie) ; superposé au texte à partir de xl ; en sombre, encre sur arche craie.
+- **Accueil** : projets visiblement cliquables au repos, sections avec en-tête commun (`SectionHeader`), principes en liste numérotée, cartes « Aussi chez Ingeli » enrichies.
+- **Études de cas** : nouveau gabarit (bandeau de fiche projet, « En bref » avec défi + chiffres, sommaire collant qui suit la lecture, projet suivant).
+- **Mobile** : retours visuels à l'appui, aucun effet de survol collé, correctif iOS `:active`.
+- Typographie française automatique (`fr()`).
+- Agents de revue Cursor `ux-review` et `a11y-audit` (§10) ; audit axe : 0 violation sur 7 pages × 4 configurations.
 
 ⏳ À faire, par priorité
-1. **Visuels** : exporter `cover.png` (1600×1000) + visuels de sections pour chaque projet dans `public/images/projects/<slug>/`, renseigner `cover`/`media` (avec `width`/`height`), passer `status` à `"ready"`, remplacer `MediaPlaceholder` par `next/image`.
-2. **Infos de contact** : email, LinkedIn, CV PDF, domaine (`metadataBase`).
-3. **Faits à compléter** (`grep -rn "TODO(louise)" src`) : constats de l'audit Precia Molen, périodes des projets Ingeli, mesures d'impact.
-4. Vignette du projet qui suit doucement le curseur au survol des rangées (desktop), quand les visuels existent.
-5. Interaction-signature sur l'étude 01 : un même bouton qui bascule entre « vue Figma » et « vue code ».
-6. Images Open Graph par projet (`opengraph-image.tsx`), `sitemap.ts`, `robots.ts`.
-7. Déploiement Vercel + domaine.
-8. Version anglaise.
+1. **Visuels** : extraire du Book 2026 ce qui existe, compléter avec des captures (avant/après TechniCenter, panneau Variables Figma…). Les placer dans `public/images/projects/<slug>/`, renseigner `cover`/`media` (avec `width`/`height`), passer `status` à `"ready"`.
+2. **Faits à compléter** (`grep -rn "TODO(louise)" src`).
+3. Domaine personnalisé + `metadataBase`.
+4. Images Open Graph par projet (`opengraph-image.tsx`), `sitemap.ts`, `robots.ts`.
+5. Version anglaise.
 
 ## 8. Commandes
 
