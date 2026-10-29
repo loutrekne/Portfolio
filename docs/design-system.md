@@ -11,7 +11,7 @@ Un site humain et calme, qui fait du bien à parcourir. Pas de look « produit I
 
 ## Couleurs
 
-### Neutres « papier & encre » (communs aux 3 palettes)
+### Neutres « papier & encre »
 
 | Rôle | Clair | Sombre |
 |---|---|---|
@@ -23,20 +23,16 @@ Un site humain et calme, qui fait du bien à parcourir. Pas de look « produit I
 | `fg-subtle` | `#6b695f` — 5.1:1 | `#8f8c82` — 5.4:1 |
 | `border` | `#e4e1d9` | `#2c2b26` |
 
-### Accent : 4 palettes au choix
+### Accent : terracotta
 
-Changer d'accent = changer `data-palette` sur `<html>` (layout.tsx). Une fois le choix arrêté, supprimer les autres blocs de `tokens.css`.
+Un seul accent, défini sur `:root` dans `tokens.css`. Il porte le **bouton principal**, les index (01, 02…), les puces, la barre de lecture et le « coup de surligneur » (`highlight`, une teinte claire de l'accent).
 
-L'accent porte le **bouton principal**, les index (01, 02…), les puces, la barre de lecture et le « coup de surligneur » (`highlight`, une teinte claire de l'accent).
+| | `accent` / bouton | `highlight` | Caractère |
+|---|---|---|---|
+| **Clair** | `#a8492a` — 5.3:1 (blanc dessus : 5.8:1) | `#f1c9b6` | Terre cuite. Chaleureux, artisanal. |
+| **Sombre** | `#eba283` — 8.7:1 (`btn-bg` `#f2c6b2`) | `#83402a` | Même famille, plus claire pour le contraste. |
 
-| Palette | `accent` / bouton clair | `highlight` clair | `accent` sombre | `highlight` sombre | bouton sombre | Caractère |
-|---|---|---|---|---|---|---|
-| **Marine** (défaut) | `#1f3a68` — 10.4:1 | `#c9d6ef` | `#9db6e3` — 8.9:1 | `#2f4c80` | `#c9d7f0` | Bleu navy. Sérieux, posé, élégant sur le papier chaud. |
-| **Roi** | `#2550c0` — 6.5:1 | `#c8d6fa` | `#8faaf2` — 8.0:1 | `#2d46a0` | `#c4d3fa` | Bleu franc, sans la pointe violette de l'indigo. Plus vif. |
-| **Terracotta** | `#a8492a` — 5.3:1 | `#f1c9b6` | `#eba283` — 8.7:1 | `#83402a` | `#f2c6b2` | Terre cuite. Chaleureux, artisanal. |
-| **Lavande** | `#5f4f9e` — 6.3:1 | `#d9cff2` | `#bcb0ee` — 9.2:1 | `#55488c` | `#d9d1f7` | Violet poudré. Doux et singulier ; le plus proche des codes « IA », à garder désaturé. |
-
-- Texte blanc sur bouton clair : ≥ 5.8:1 dans les 4 palettes. Texte nuit sur bouton sombre : ≥ 11.7:1.
+- Texte nuit sur bouton sombre : ≥ 11.7:1.
 - Texte posé sur `highlight` : encre en clair (≥ 11.3:1), craie en sombre (≥ 6.5:1).
 - `success` vert `#3f8f5a` : uniquement la pastille « disponible ».
 

@@ -29,8 +29,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={defaultLocale}
       className={`${figtree.variable} antialiased`}
-      // data-palette : "marine" (défaut, peut être omis) | "roi" | "terracotta" | "lavande" — voir tokens.css
-      data-palette="marine"
       // le script de thème modifie data-theme avant l'hydratation
       suppressHydrationWarning
     >

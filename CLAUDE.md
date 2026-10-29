@@ -110,10 +110,11 @@ Le site est en français. Pour ajouter l'anglais :
 
 ✅ Fait
 - Squelette Next.js 16 + Tailwind 4 + TS, build vérifié (11 pages statiques)
-- v2 : direction naturelle et minimaliste (papier & encre, Figtree, 4 palettes d'accent : marine par défaut, roi, terracotta, lavande)
+- v2 : direction naturelle et minimaliste (papier & encre, Figtree, accent terracotta)
 - Micro-interactions : surligneur, boutons à ressort, copie d'email, compteurs, apparitions, header discret, barre de lecture, bascule de thème sans flash
 - Textes recentrés sur la collaboration et l'utilisabilité (hero, principes, contact)
 - Design tokens clair/sombre (suit le système, forçable), contrastes AA vérifiés
+- Palette unique terracotta (marine, roi et lavande retirées)
 - Tous les textes FR : hero, à propos, 4 principes, 5 études de cas, 2 projets courts, parcours
 - Gabarits : accueil, étude de cas, à propos, 404
 
@@ -121,12 +122,11 @@ Le site est en français. Pour ajouter l'anglais :
 1. **Visuels** : exporter `cover.png` (1600×1000) + visuels de sections pour chaque projet dans `public/images/projects/<slug>/`, renseigner `cover`/`media` (avec `width`/`height`), passer `status` à `"ready"`, remplacer `MediaPlaceholder` par `next/image`.
 2. **Infos de contact** : email, LinkedIn, CV PDF, domaine (`metadataBase`).
 3. **Faits à compléter** (`grep -rn "TODO(louise)" src`) : constats de l'audit Precia Molen, périodes des projets Ingeli, mesures d'impact.
-4. **Choisir la palette** (marine / roi / terracotta / lavande) et supprimer les autres de `tokens.css`.
-5. Vignette du projet qui suit doucement le curseur au survol des rangées (desktop), quand les visuels existent.
-6. Interaction-signature sur l'étude 01 : un même bouton qui bascule entre « vue Figma » et « vue code ».
-7. Images Open Graph par projet (`opengraph-image.tsx`), `sitemap.ts`, `robots.ts`.
-8. Déploiement Vercel + domaine.
-9. Version anglaise.
+4. Vignette du projet qui suit doucement le curseur au survol des rangées (desktop), quand les visuels existent.
+5. Interaction-signature sur l'étude 01 : un même bouton qui bascule entre « vue Figma » et « vue code ».
+6. Images Open Graph par projet (`opengraph-image.tsx`), `sitemap.ts`, `robots.ts`.
+7. Déploiement Vercel + domaine.
+8. Version anglaise.
 
 ## 8. Commandes
 
