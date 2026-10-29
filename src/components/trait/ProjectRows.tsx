@@ -18,12 +18,24 @@ export interface ProjectRow {
 
 /**
  * Liste des études de cas.
+ *  - Au repos, chaque rangée DIT qu'elle est cliquable : pastille flèche à droite
+ *    (grand écran) ou « Lire l'étude de cas → » en accent (mobile, sans survol).
+ *    Rangées séparées par des filets.
  *  - Au survol d'une rangée, le titre se souligne d'un trait de feutre qui se dessine.
  *  - À la souris, une pastille « Voir le projet → » suit le curseur avec un ressort,
  *    uniquement au-dessus de la liste. Le curseur normal reste visible : on ajoute
  *    une indication, on ne retire rien. Rien sur écran tactile.
  */
-export function ProjectRows({ rows, cursorLabel }: { rows: ProjectRow[]; cursorLabel: string }) {
+export function ProjectRows({
+  rows,
+  cursorLabel,
+  ctaLabel,
+}: {
+  rows: ProjectRow[];
+  cursorLabel: string;
+  /** Appel à l'action visible au repos (« Lire l'étude de cas »). */
+  ctaLabel: string;
+}) {
   const fine = usePointerFine();
   const [active, setActive] = useState(false);
   const x = useMotionValue(0);
@@ -34,7 +46,7 @@ export function ProjectRows({ rows, cursorLabel }: { rows: ProjectRow[]; cursorL
   return (
     <>
       <ol
-        className="-mx-4 mt-8 sm:-mx-6"
+        className="mt-8 border-t border-border"
         onPointerMove={(e) => {
           if (e.pointerType !== "mouse") return;
           x.set(e.clientX);
@@ -49,14 +61,18 @@ export function ProjectRows({ rows, cursorLabel }: { rows: ProjectRow[]; cursorL
         onPointerLeave={() => setActive(false)}
       >
         {rows.map((p) => (
-          <li key={p.slug} className="reveal">
+          <li key={p.slug} className="reveal border-b border-border">
             <motion.div initial="rest" animate="rest" whileHover="hover" whileTap="hover">
               <Link
                 href={`/projets/${p.slug}`}
-                className="group grid gap-3 rounded-md px-4 py-8 transition-colors duration-300 hover:bg-surface active:bg-surface sm:grid-cols-[3.5rem_1fr_auto] sm:gap-6 sm:px-6"
+                className="group -mx-4 my-2 grid gap-3 rounded-md px-4 py-7 transition-colors duration-300 hover:bg-surface active:bg-surface sm:-mx-6 sm:grid-cols-[3.5rem_1fr_auto] sm:gap-6 sm:px-6"
               >
-                <span className="text-label font-medium text-accent tabular-nums transition-transform duration-500 ease-spring group-hover:translate-x-1 group-active:translate-x-1">
-                  {p.index}
+                <span className="flex items-baseline justify-between text-label">
+                  <span className="font-medium text-accent tabular-nums transition-transform duration-500 ease-spring group-hover:translate-x-1 group-active:translate-x-1">
+                    {p.index}
+                  </span>
+                  {/* Mobile : la période remonte sur la ligne du numéro */}
+                  <span className="text-fg-subtle sm:hidden">{p.period}</span>
                 </span>
                 <div>
                   <p className="text-label text-fg-muted">
@@ -73,8 +89,27 @@ export function ProjectRows({ rows, cursorLabel }: { rows: ProjectRow[]; cursorL
                     </span>
                   </h2>
                   <p className="mt-3 measure text-fg-muted">{p.tagline}</p>
+                  {/* Mobile : appel à l'action visible au repos (pas de survol sur écran tactile) */}
+                  <span className="mt-5 inline-flex items-center gap-2 font-medium text-accent sm:hidden">
+                    {ctaLabel}
+                    <span
+                      aria-hidden
+                      className="transition-transform duration-500 ease-spring group-hover:translate-x-1.5 group-active:translate-x-1.5"
+                    >
+                      →
+                    </span>
+                  </span>
                 </div>
-                <span className="self-start text-label text-fg-subtle sm:pt-1">{p.period}</span>
+                {/* Grand écran : période + pastille flèche, qui se remplit d'accent au survol / à l'appui */}
+                <div className="hidden flex-col items-end justify-between gap-6 sm:flex">
+                  <span className="pt-1 text-label text-fg-subtle">{p.period}</span>
+                  <span
+                    aria-hidden
+                    className="grid size-12 place-items-center rounded-full border border-border-strong text-fg transition-colors duration-300 group-hover:border-btn group-hover:bg-btn group-hover:text-btn-fg group-active:border-btn group-active:bg-btn group-active:text-btn-fg"
+                  >
+                    <span className="transition-transform duration-500 ease-spring group-hover:translate-x-0.5">→</span>
+                  </span>
+                </div>
               </Link>
             </motion.div>
           </li>

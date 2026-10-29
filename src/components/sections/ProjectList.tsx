@@ -20,7 +20,7 @@ export function ProjectList() {
   return (
     <section id="projets" className="container-site section-y">
       <Eyebrow>{site.ui.selectedWork}</Eyebrow>
-      <ProjectRows rows={rows} cursorLabel={site.ui.seeProject} />
+      <ProjectRows rows={rows} cursorLabel={site.ui.seeProject} ctaLabel={site.ui.readCase} />
     </section>
   );
 }
