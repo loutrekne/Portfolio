@@ -63,9 +63,9 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
     │   ├── trait/    LE TRAIT : HeaderString, Scribble, DrawnRule, DrawnUnderline, PortraitSticker, ProjectRows
     │   ├── layout/   SiteHeader, SiteFooter
     │   ├── sections/ Hero, ProjectList, Principles, OtherWork, ContactCta
-    │   ├── project/  SpecSheet, CaseSectionBlock, Outcomes, PullQuote
+    │   ├── project/  Gabarit étude de cas : CaseHero (titre + fiche en bandeau), CaseOverview (« En bref » : défi, projet, chiffres), CaseToc (sommaire collant qui suit la lecture), CaseSectionBlock, PullQuote, NextProject
     │   └── ui/       Eyebrow, SectionHeader (label + titre + intro, pour toutes les sections), ButtonLink, Tag, MediaPlaceholder
-    └── lib/cn.ts
+    └── lib/cn.ts, typo.ts (fr() : espaces insécables avant : ; ? !)
 ```
 
 ## 4. Plan du site
