@@ -143,7 +143,10 @@ npm run typecheck  # next typegen + tsc
 npm run lint
 npm run build
 npm run format
+npm run screenshots  # captures mobile / tablette / desktop × clair / sombre → docs/reviews/captures/ (site lancé)
+npm run a11y         # audit axe WCAG 2.2 AA de toutes les pages → docs/reviews/axe-latest.json (site lancé)
 ```
+Première fois pour les deux derniers : `npx playwright install chromium`.
 
 ## 9. Le trait (langage graphique)
 
@@ -157,7 +160,17 @@ Le motif du site est **le trait dessiné à la main**, en terracotta, qui prolon
 | `DrawnUnderline` | Soulignement au feutre au survol (CSS pur, utilisable côté serveur) : nav, footer, bouton « ghost » |
 | `PortraitSticker` | Portrait du hero, sans arche : encre + passage terracotta décalé (effet risographie) qui suit la souris ; se tire à la souris (élastique). Thème sombre : même dessin à l'encre, sur une arche craie (`--portrait-sheet`). Le hero le superpose au texte (même rangée de grille, à partir de xl) |
 | `PortraitDrawing` | Le dessin qui se trace (contours de haut en bas, puis l'encre), puis cligne des yeux et suit la souris ; un clic le redessine. Option `wash` : passage terracotta décalé. Encre = `--portrait-ink` (toujours encre : un dessin inversé en blanc donne un négatif). Données générées dans `portrait-paths.ts` |
-| `ProjectRows` | Liste des projets : titre souligné au survol + pastille « Voir le projet → » qui suit la souris |
+| `ProjectRows` | Liste des projets, visiblement cliquable au repos : pastille flèche (desktop) ou « Lire l'étude de cas → » (mobile). Titre souligné au survol / à l'appui + pastille « Voir le projet → » qui suit la souris |
 
 Règles : un trait répond à un geste ou accompagne une arrivée, jamais en boucle. Sur écran tactile, pas de pastille ni de glisser ; un tap dans l'en-tête pince la corde (HeaderString). Les tracés utilisent `pathLength={1}` + `strokeDashoffset` **sans** `vector-effect="non-scaling-stroke"` (Chrome découpe le trait en pointillés sinon).
 
+## 10. Agents de revue (Cursor)
+
+Deux sous-agents dans `.cursor/agents/`, à appeler dans le chat de Cursor. Ils ne modifient jamais le code : ils écrivent un rapport priorisé (P0 / P1 / P2) dans `docs/reviews/`.
+
+| Agent | Appel | Ce qu'il fait |
+|---|---|---|
+| `ux-review` | `/ux-review` (+ page ou section, optionnel) | Regarde le site via `npm run screenshots` (et le navigateur de Cursor), avec trois lecteurs en tête : recruteur·se, design manager, tech lead. Grille : premier écran, hiérarchie, affordances, études de cas, design system, micro-interactions, mobile, contenus. Rapport : `docs/reviews/AAAA-MM-JJ-ux-review.md` |
+| `a11y-audit` | `/a11y-audit` | WCAG 2.2 A + AA. Test automatique `npm run a11y` (axe, 4 configurations), puis vérification manuelle : clavier, structure, alternatives, contrastes, mouvement, tactile, zoom, lecteur d'écran. Rapport : `docs/reviews/AAAA-MM-JJ-a11y.md` |
+
+Les captures et le JSON d'axe sont ignorés par Git ; les rapports `.md` sont versionnés.

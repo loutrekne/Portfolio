@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# revues (agents ux-review / a11y-audit) : seuls les rapports .md sont versionnés
+docs/reviews/captures/
+docs/reviews/axe-latest.json
