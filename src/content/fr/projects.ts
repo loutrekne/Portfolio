@@ -88,7 +88,7 @@ export const projects: CaseStudy[] = [
         heading: "Code-first, Git comme historique",
         body: [
           "J'ai déplacé la source de vérité dans un repo dédié, versionné en Git. La feuille de style devient la référence : les composants Blazor de production la consomment, et un autre framework peut faire de même. Un prototype React l'a d'ailleurs consommée telle quelle.",
-          "L'historique Git devient l'historique du design system. Chaque changement est tracé, daté, commenté. Je sais pourquoi la couleur accent a changé il y a trois mois.",
+          "L'historique Git devient l'historique du design system. Chaque changement est tracé, daté, commenté. Je retrouve quand, et pourquoi, la couleur accent a changé.",
         ],
       },
       {
@@ -97,6 +97,7 @@ export const projects: CaseStudy[] = [
         heading: "Deux agents IA dans la boucle design → code → Figma",
         body: [
           "Pour que le code-first tienne au quotidien, la boucle entre design, code et Figma doit rester fluide. J'ai mis en place deux agents, chacun sur un sens du trajet.",
+          "En quatre semaines d'historique Git, j'ai écrit avec l'agent environ 12 000 lignes d'outillage : générateurs, contrôles, tests. Avant chaque commit, 25 étapes de contrôle s'enchaînent et s'arrêtent au premier échec.",
         ],
         cards: [
           {
@@ -120,11 +121,10 @@ export const projects: CaseStudy[] = [
       },
     ],
     outcomes: [
-      { value: "4", label: "produits servis par un seul design system" },
-      { value: "1", label: "source de vérité : un repo Git versionné" },
-      { value: "2", label: "agents IA intégrés au pipeline de handoff" },
-      // TODO(louise) : ajouter une mesure d'impact si disponible
-      // (ex. temps de handoff avant/après, nb de composants générés).
+      { value: "1 → 7", label: "une source, sept sorties générées : tokens, kit, Figma, code…" },
+      { value: "237", label: "paires de contraste vérifiées à chaque build, 0 échec" },
+      { value: "37", label: "composants dans le kit, dont 22 documentés" },
+      { value: "317", label: "variables Figma synchronisées et contrôlées" },
     ],
     pullQuote: {
       text: "Le handoff design → dev arrête d'être un endroit où les choses se perdent.",
