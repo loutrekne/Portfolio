@@ -27,7 +27,7 @@ export function Hero() {
         alt={site.ui.portraitAlt}
         className="mx-auto w-48 sm:ml-0 sm:w-72 lg:col-span-7 lg:col-start-6 lg:row-start-1 lg:mx-0 lg:w-full lg:max-w-[26rem] lg:justify-self-end xl:max-w-[38rem]"
       />
-      <div className="relative z-10 -mt-8 flex flex-col items-start sm:-mt-10 lg:col-span-8 lg:col-start-1 lg:row-start-1 lg:mt-0">
+      <div className="relative z-10 -mt-8 sm:-mt-10 lg:col-span-8 lg:col-start-1 lg:row-start-1 lg:mt-0">
         {/* Pastille : sur mobile elle chevauche le bas de l'arche, d'où son fond */}
         <p className="inline-flex items-center gap-2.5 rounded-full bg-bg/90 py-1.5 pr-4 pl-3 text-label font-medium text-fg-muted shadow-soft backdrop-blur-sm lg:bg-transparent lg:p-0 lg:shadow-none lg:backdrop-blur-none">
           <span aria-hidden className="size-2 breathe rounded-full bg-success" />
@@ -53,8 +53,8 @@ export function Hero() {
             </>
           )}
         </h1>
-        {/* Mobile : le texte passe APRÈS les boutons, pour garder l'action dans le premier écran */}
-        <p className="order-last mt-8 max-w-[34rem] text-lead text-fg-muted sm:order-none sm:mt-6 lg:max-w-[26rem] xl:mt-8 xl:max-w-[30rem]">
+        {/* Grand écran : texte puis boutons */}
+        <p className="mt-6 hidden max-w-[34rem] text-lead text-fg-muted sm:block lg:max-w-[26rem] xl:mt-8 xl:max-w-[30rem]">
           {fr(about.hero.lead)}
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3 xl:mt-10">
@@ -65,6 +65,10 @@ export function Hero() {
             {site.ui.contactMe}
           </ButtonLink>
         </div>
+        {/* Mobile : boutons puis texte, pour garder l'action dans le premier écran.
+            Deux exemplaires du texte, un seul affiché (display: none = ignoré par les
+            lecteurs d'écran) : l'ordre lu suit toujours l'ordre affiché. */}
+        <p className="mt-8 text-lead text-fg-muted sm:hidden">{fr(about.hero.lead)}</p>
       </div>
     </section>
   );

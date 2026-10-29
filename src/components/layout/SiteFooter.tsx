@@ -17,12 +17,14 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <DrawnUnderline>LinkedIn</DrawnUnderline>
+              <DrawnUnderline>{site.ui.linkedin}</DrawnUnderline>
+              <span className="sr-only"> ({site.ui.newTab})</span>
             </a>
           </li>
           <li>
             <a href={site.contact.cvHref} target="_blank" rel="noopener noreferrer" className="hover:text-fg">
-              <DrawnUnderline>CV</DrawnUnderline>
+              <DrawnUnderline>{site.ui.cv}</DrawnUnderline>
+              <span className="sr-only"> ({site.ui.pdfNewTab})</span>
             </a>
           </li>
         </ul>

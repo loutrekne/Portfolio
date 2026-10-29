@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
 import { DrawnUnderline } from "@/components/trait/DrawnUnderline";
+import { getContent } from "@/content";
 
 type Variant = "primary" | "secondary" | "ghost";
 
@@ -44,18 +45,19 @@ export function ButtonLink({
       )}
     </>
   );
-  const isInternal = href.startsWith("/") && !href.endsWith(".pdf");
+  const isPdf = href.endsWith(".pdf");
+  const isInternal = href.startsWith("/") && !isPdf;
+  const opensNewTab = isPdf || href.startsWith("http");
+  const { ui } = getContent().site;
   return isInternal ? (
     <Link href={href} className={classes}>
       {content}
     </Link>
   ) : (
-    <a
-      href={href}
-      className={classes}
-      {...((href.endsWith(".pdf") || href.startsWith("http")) && { target: "_blank", rel: "noopener noreferrer" })}
-    >
+    <a href={href} className={classes} {...(opensNewTab && { target: "_blank", rel: "noopener noreferrer" })}>
       {content}
+      {/* Annonce le changement de contexte aux lecteurs d'écran */}
+      {opensNewTab && <span className="sr-only"> ({isPdf ? ui.pdfNewTab : ui.newTab})</span>}
     </a>
   );
 }

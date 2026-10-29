@@ -35,11 +35,17 @@ export function SiteHeader() {
                 rel="noopener noreferrer"
                 className="text-fg-muted transition-colors hover:text-fg"
               >
-                <DrawnUnderline>CV</DrawnUnderline>
+                <DrawnUnderline>{site.ui.cv}</DrawnUnderline>
+                <span className="sr-only"> ({site.ui.pdfNewTab})</span>
               </a>
             </li>
           </ul>
-          <ThemeToggle labelLight={site.ui.themeLight} labelDark={site.ui.themeDark} />
+          <ThemeToggle
+            labelLight={site.ui.themeLight}
+            labelDark={site.ui.themeDark}
+            nowLight={site.ui.themeNowLight}
+            nowDark={site.ui.themeNowDark}
+          />
         </nav>
       </div>
     </HeaderShell>

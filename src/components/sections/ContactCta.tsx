@@ -14,7 +14,7 @@ export function ContactCta() {
         <h2 className="mt-6 max-w-[18ch] text-h1 font-semibold text-balance">{site.contact.ctaTitle}</h2>
         <p className="mt-6 measure text-lead text-fg-muted">{fr(site.contact.ctaText)}</p>
         <div className="mt-10 flex flex-wrap items-center gap-3">
-          <CopyEmailButton email={site.contact.email} copiedLabel={site.ui.copied} />
+          <CopyEmailButton email={site.contact.email} copiedLabel={site.ui.copied} failedLabel={site.ui.copyFailed} />
           <ButtonLink href={site.contact.cvHref} variant="secondary">
             {site.ui.downloadCv}
           </ButtonLink>

@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
  * Le HTML serveur contient déjà la valeur finale : sans JS, ou si l'utilisateur
  * préfère moins de mouvement, on voit directement le bon chiffre.
  * Les valeurs non numériques ("MVP", "2 → 1") sont affichées telles quelles.
+ * Accessibilité : les lecteurs d'écran lisent TOUJOURS la valeur finale
+ * (span sr-only) ; le chiffre qui défile est masqué pour eux (aria-hidden).
  */
 export function CountUp({ value, className }: { value: string; className?: string }) {
   const target = /^\d+$/.test(value) ? Number(value) : null;
@@ -45,8 +47,11 @@ export function CountUp({ value, className }: { value: string; className?: strin
   }, [target]);
 
   return (
-    <span ref={ref} className={className} style={{ fontVariantNumeric: "tabular-nums" }}>
-      {display}
-    </span>
+    <>
+      <span className="sr-only">{value}</span>
+      <span ref={ref} aria-hidden className={className} style={{ fontVariantNumeric: "tabular-nums" }}>
+        {display}
+      </span>
+    </>
   );
 }

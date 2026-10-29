@@ -97,6 +97,8 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
 **Accessibilité & perf**
 12. WCAG AA minimum (contrastes vérifiés dans `docs/design-system.md`), focus visible, navigation clavier, `alt` descriptifs, `prefers-reduced-motion` respecté.
 13. Toutes les pages sont statiques. Images via `next/image` avec `width/height`.
+13 ter. **Clavier et Motion** : Motion rend focusable tout `motion.*` qui a `onTap` / `whileTap` (tabindex 0). Sur une enveloppe qui contient déjà un lien, ou sur un geste bonus (portrait), passer `tabIndex={-1}`. Cartes entièrement cliquables : « lien étiré » (le lien sur le titre, `after:absolute after:inset-0`, conteneur `relative`), jamais un `<a>` qui englobe toute la carte, ni `aria-labelledby` (échec 2.5.3).
+13 quater. **Lecteurs d'écran** : chiffres animés → valeur finale en `sr-only`, animation en `aria-hidden` (`CountUp`). Messages de statut (copie, thème) dans une région `aria-live` placée hors du bouton. Liens externes et PDF : « (nouvel onglet) » / « (PDF, nouvel onglet) » en `sr-only`. Un label qui nomme une section = `<Eyebrow as="h2">`.
 13 bis. **Tactile** : tout effet de survol fait maison est enveloppé dans `@media (hover: hover)` (sinon il reste « collé » après un tap) et a son équivalent à l'appui (`:active`, `group-active:`, `whileTap` côté Motion). Les variantes Tailwind `hover:` sont déjà protégées. Le correctif iOS pour `:active` est dans `MotionProvider`.
 
 **Code**

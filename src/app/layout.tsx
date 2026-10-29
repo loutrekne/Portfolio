@@ -15,7 +15,6 @@ import "./globals.css";
  */
 const figtree = Figtree({ variable: "--font-figtree", subsets: ["latin"], style: ["normal", "italic"] });
 
-
 const { site } = getContent();
 
 export const metadata: Metadata = {
@@ -46,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </a>
         <MotionProvider>
           <SiteHeader />
-          <main id="contenu" className="flex-1">
+          <main id="contenu" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>
           <SiteFooter />

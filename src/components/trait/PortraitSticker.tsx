@@ -25,6 +25,8 @@ export function PortraitSticker({ alt, className }: { alt: string; className?: s
   return (
     <div className={`relative aspect-[1871/1946] ${className ?? ""}`}>
       <motion.div
+        // tabIndex -1 : le redessin au clic est un bonus, pas une fonction → pas d'arrêt clavier
+        tabIndex={-1}
         className={`absolute inset-0 ${fine ? "cursor-grab active:cursor-grabbing" : ""}`}
         whileHover={{ y: -4 }}
         // Tactile : le dessin s'enfonce sous le doigt, puis se redessine

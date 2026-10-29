@@ -58,11 +58,11 @@ export default function AboutPage() {
       </div>
 
       <section className="mt-[var(--space-section)]">
-        <Eyebrow>{site.ui.skills}</Eyebrow>
+        <Eyebrow as="h2">{site.ui.skills}</Eyebrow>
         <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {about.skills.map((g) => (
             <div key={g.label}>
-              <h2 className="font-semibold">{g.label}</h2>
+              <h3 className="font-semibold">{g.label}</h3>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {g.items.map((s) => (
                   <li key={s}>
@@ -76,7 +76,7 @@ export default function AboutPage() {
       </section>
 
       <section className="mt-[var(--space-section)]">
-        <Eyebrow>{site.ui.experience}</Eyebrow>
+        <Eyebrow as="h2">{site.ui.experience}</Eyebrow>
         <div className="mt-8">
           <Timeline items={about.experience} />
         </div>
@@ -84,14 +84,14 @@ export default function AboutPage() {
 
       <section className="mt-[var(--space-section)] grid gap-12 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <Eyebrow>{site.ui.education}</Eyebrow>
+          <Eyebrow as="h2">{site.ui.education}</Eyebrow>
           <div className="mt-8">
             <Timeline items={about.education} />
           </div>
         </div>
         <div className="space-y-10">
           <div>
-            <Eyebrow>{site.ui.certifications}</Eyebrow>
+            <Eyebrow as="h2">{site.ui.certifications}</Eyebrow>
             <ul className="mt-6 space-y-2">
               {about.certifications.map((c) => (
                 <li key={c}>{c}</li>
@@ -99,7 +99,7 @@ export default function AboutPage() {
             </ul>
           </div>
           <div>
-            <Eyebrow>{site.ui.languages}</Eyebrow>
+            <Eyebrow as="h2">{site.ui.languages}</Eyebrow>
             <ul className="mt-6 space-y-2">
               {about.languages.map((l) => (
                 <li key={l}>{l}</li>

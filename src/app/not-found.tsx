@@ -1,6 +1,10 @@
+import type { Metadata } from "next";
 import { getContent } from "@/content";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Eyebrow } from "@/components/ui/Eyebrow";
+
+/** Titre d'onglet propre (sinon la 404 porte le titre de l'accueil) : « Page introuvable — Louise Knoery ». */
+export const metadata: Metadata = { title: getContent().site.ui.notFoundMeta };
 
 export default function NotFound() {
   const { site } = getContent();

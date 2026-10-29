@@ -9,7 +9,8 @@ import { Scribble } from "@/components/trait/Scribble";
 export function NextProject({ href, index, title, label }: { href: string; index: string; title: string; label: string }) {
   return (
     <nav aria-label={label}>
-      <motion.div initial="rest" animate="rest" whileHover="hover" whileTap="hover">
+      {/* tabIndex -1 : sinon Motion rend cette enveloppe focusable (whileTap) ; le lien suffit */}
+      <motion.div tabIndex={-1} initial="rest" animate="rest" whileHover="hover" whileTap="hover">
         <Link href={href} className="group block rounded-lg bg-surface p-8 sm:p-12">
           <Eyebrow index={index}>{label}</Eyebrow>
           <span className="mt-4 flex items-baseline justify-between gap-6 text-h2 font-semibold">
