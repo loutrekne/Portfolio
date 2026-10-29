@@ -14,7 +14,7 @@ export function Portrait({ alt, className }: { alt: string; className?: string }
       {/* Arche de fond */}
       <div
         aria-hidden
-        className="absolute inset-x-0 top-[12%] bottom-0 rounded-t-full bg-portrait-bg transition-transform duration-500 ease-spring group-hover:scale-[1.03]"
+        className="absolute inset-x-0 top-0 bottom-0 rounded-t-full bg-portrait-bg transition-transform duration-500 ease-spring group-hover:scale-[1.03]"
       />
       {/* Dessin */}
       <div

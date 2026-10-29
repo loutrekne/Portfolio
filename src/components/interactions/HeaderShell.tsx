@@ -37,7 +37,7 @@ export function HeaderShell({ children }: { children: React.ReactNode }) {
       className="sticky top-0 z-40 transition-[transform,background-color] duration-500 ease-spring"
       style={{
         transform: hidden ? "translateY(-100%)" : "none",
-        backgroundColor: scrolled ? "color-mix(in srgb, var(--bg) 82%, transparent)" : "transparent",
+        backgroundColor: scrolled ? "color-mix(in srgb, var(--bg) 94%, transparent)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
       }}

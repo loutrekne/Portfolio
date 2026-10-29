@@ -1,6 +1,7 @@
 import { getContent } from "@/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ProjectRows } from "@/components/trait/ProjectRows";
+import { fr } from "@/lib/typo";
 
 /**
  * Section « Projets sélectionnés ». Les données sont lues ici (composant
@@ -13,8 +14,8 @@ export function ProjectList() {
     index,
     client,
     sector,
-    title,
-    tagline,
+    title: fr(title),
+    tagline: fr(tagline),
     period,
   }));
   return (

@@ -39,7 +39,8 @@ export function PortraitSticker({ alt, className }: { alt: string; className?: s
         onTap={() => setReplay((n) => n + 1)}
       >
         {/* Arche « feuille de papier » : invisible en thème clair, craie en thème sombre */}
-        <div className="absolute inset-x-0 top-[8%] bottom-0 rounded-t-full rounded-b-[18px] bg-[var(--portrait-sheet)]" />
+        {/* top-0 : l'arche doit couvrir le haut des cheveux, sinon l'encre se perd dans le fond nuit */}
+        <div className="absolute inset-x-0 top-0 bottom-0 rounded-t-full rounded-b-[18px] bg-[var(--portrait-sheet)]" />
         <PortraitDrawing alt={alt} replayKey={replay} wash />
       </motion.div>
     </div>

@@ -53,7 +53,7 @@ export function ButtonLink({
     <a
       href={href}
       className={classes}
-      {...(href.endsWith(".pdf") && { target: "_blank", rel: "noopener noreferrer" })}
+      {...((href.endsWith(".pdf") || href.startsWith("http")) && { target: "_blank", rel: "noopener noreferrer" })}
     >
       {content}
     </a>

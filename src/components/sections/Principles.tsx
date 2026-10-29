@@ -1,5 +1,6 @@
 import { getContent } from "@/content";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { fr } from "@/lib/typo";
 
 /**
  * « Comment je travaille ».
@@ -16,7 +17,7 @@ export function Principles() {
         <SectionHeader
           eyebrow={site.ui.howIWork}
           title={site.ui.howIWorkTitle}
-          intro={site.ui.howIWorkIntro}
+          intro={fr(site.ui.howIWorkIntro)}
           className="lg:sticky lg:top-28 lg:self-start"
         />
         <ol className="border-t border-border">
@@ -30,7 +31,7 @@ export function Principles() {
               </span>
               <div>
                 <h3 className="text-h3 font-semibold">{pr.title}</h3>
-                <p className="mt-2 measure text-fg-muted">{pr.text}</p>
+                <p className="mt-2 measure text-fg-muted">{fr(pr.text)}</p>
               </div>
             </li>
           ))}

@@ -151,6 +151,7 @@ export interface SiteContent {
     | "seeProjects"
     | "contactMe"
     | "downloadCv"
+    | "linkedin"
     | "selectedWork"
     | "otherWork"
     | "howIWork"

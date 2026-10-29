@@ -37,6 +37,7 @@ export const site: SiteContent = {
     seeProjects: "Voir les projets",
     contactMe: "Me contacter",
     downloadCv: "Télécharger le CV",
+    linkedin: "LinkedIn",
     selectedWork: "Projets sélectionnés",
     otherWork: "Aussi chez Ingeli",
     howIWork: "Comment je travaille",
