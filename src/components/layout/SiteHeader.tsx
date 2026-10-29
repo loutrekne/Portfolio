@@ -17,7 +17,7 @@ export function SiteHeader() {
             {site.nav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className="text-fg-muted transition-colors hover:text-fg">
-                  <span className="mark">{item.label}</span>
+                  <span className="mark">{item.label}</span> 
                 </Link>
               </li>
             ))}
