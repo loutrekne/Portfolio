@@ -54,7 +54,10 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
     ├── content/
     │   ├── types.ts          ← types de tout le contenu
     │   ├── index.ts          ← getContent(), getProject()
-    │   └── fr/{site,about,projects}.ts  ← TOUS les textes
+    │   └── fr/
+    │       ├── site.ts
+    │       ├── about.ts
+    │       └── projects/     ← un fichier par slug + index.ts
     ├── components/
     │   ├── interactions/ ThemeScript, ThemeToggle, HeaderShell, RevealObserver, CopyEmailButton, CountUp
     │   ├── layout/   SiteHeader, SiteFooter
@@ -80,23 +83,24 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
 2. **Ne jamais inventer un chiffre, un résultat ou une citation.** Les `TODO(louise)` signalent les faits à fournir par Louise.
 3. Pas de nom de personne extérieure sur le site sans accord (l'avis store cité est anonymisé).
 4. Ton : français, phrases courtes, assertives, à la première personne. Pas de jargon creux (« passionnée », « pixel perfect », « innovant »).
+5. Pour ajouter un projet : créer `content/fr/projects/<slug>.ts` et l'ajouter à `projects/index.ts`.
 
 **Style**
-5. Jamais de couleur en dur (`#…`, `text-yellow-500`). Utiliser les utilitaires sémantiques : `bg-bg`, `bg-surface`, `bg-surface-muted`, `text-fg`, `text-fg-muted`, `text-accent`, `bg-highlight`, `bg-btn text-btn-fg`, `border-border`…
-6. Nouveau token → l'ajouter dans `tokens.css` (clair + sombre, et pour chaque palette si c'est un accent), puis le mapper dans `@theme inline`.
-7. Typo : une seule famille (Figtree). `text-display | text-h1 | text-h2 | text-h3 | text-lead | text-small | text-label`. Titres en `font-semibold`, labels en `font-medium`, casse normale (pas de capitales espacées, pas de mono).
-8. Un seul accent : bouton principal (`bg-btn`), index, puces, surlignage (`.mark`, `.mark-static`, `bg-highlight`). `success` ne sert qu'à la pastille « disponible ».
-9. Formes douces : `rounded-sm` (tags), `rounded-md` (cartes), `rounded-lg` (visuels, grands blocs), `rounded-pill` (boutons). Les cartes se détachent par leur fond, pas par des filets.
-10. Micro-interactions : réutiliser les classes de `globals.css` (`mark`, `btn-spring`, `lift`, `reveal`, `breathe`, `reading-progress`) et les courbes `ease-spring` / `ease-bounce`. Une interaction doit répondre à un geste et confirmer quelque chose ; jamais d'animation décorative en boucle (hors pastille « disponible »).
+6. Jamais de couleur en dur (`#…`, `text-yellow-500`). Utiliser les utilitaires sémantiques : `bg-bg`, `bg-surface`, `bg-surface-muted`, `text-fg`, `text-fg-muted`, `text-accent`, `bg-highlight`, `bg-btn text-btn-fg`, `border-border`…
+7. Nouveau token → l'ajouter dans `tokens.css` (clair + sombre, et pour chaque palette si c'est un accent), puis le mapper dans `@theme inline`.
+8. Typo : une seule famille (Figtree). `text-display | text-h1 | text-h2 | text-h3 | text-lead | text-small | text-label`. Titres en `font-semibold`, labels en `font-medium`, casse normale (pas de capitales espacées, pas de mono).
+9. Un seul accent : bouton principal (`bg-btn`), index, puces, surlignage (`.mark`, `.mark-static`, `bg-highlight`). `success` ne sert qu'à la pastille « disponible ».
+10. Formes douces : `rounded-sm` (tags), `rounded-md` (cartes), `rounded-lg` (visuels, grands blocs), `rounded-pill` (boutons). Les cartes se détachent par leur fond, pas par des filets.
+11. Micro-interactions : réutiliser les classes de `globals.css` (`mark`, `btn-spring`, `lift`, `reveal`, `breathe`, `reading-progress`) et les courbes `ease-spring` / `ease-bounce`. Une interaction doit répondre à un geste et confirmer quelque chose ; jamais d'animation décorative en boucle (hors pastille « disponible »).
 
 **Accessibilité & perf**
-11. WCAG AA minimum (contrastes vérifiés dans `docs/design-system.md`), focus visible, navigation clavier, `alt` descriptifs, `prefers-reduced-motion` respecté.
-12. Toutes les pages sont statiques. Images via `next/image` avec `width/height`.
+12. WCAG AA minimum (contrastes vérifiés dans `docs/design-system.md`), focus visible, navigation clavier, `alt` descriptifs, `prefers-reduced-motion` respecté.
+13. Toutes les pages sont statiques. Images via `next/image` avec `width/height`.
 
 **Code**
-13. Server Components par défaut. `"use client"` uniquement pour une interaction réelle.
-14. Un composant = un fichier, nommé en PascalCase, commenté en tête (rôle en une ligne).
-15. Avant de terminer une tâche : `npm run typecheck && npm run lint && npm run build`.
+14. Server Components par défaut. `"use client"` uniquement pour une interaction réelle.
+15. Un composant = un fichier, nommé en PascalCase, commenté en tête (rôle en une ligne).
+16. Avant de terminer une tâche : `npm run typecheck && npm run lint && npm run build`.
 
 ## 6. i18n (FR maintenant, EN plus tard)
 
