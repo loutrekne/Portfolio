@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import { usePointerFine } from "@/lib/usePointerFine";
 import { Scribble } from "./Scribble";
-import { ProjectFilters, type FilterGroup } from "@/components/interactions/ProjectFilters";
 
 export interface ProjectRow {
   slug: string;
@@ -15,16 +14,22 @@ export interface ProjectRow {
   title: string;
   tagline: string;
   period: string;
-  /** Slugs de catégories (compétences + secteurs) pour les filtres. */
+  /** Slugs de catégories (compétences + secteurs), pour les liens ?focus=. */
   categories: string[];
+  /** Compétences affichées sous le titre (« Design system · Recherche »). */
+  skillLabels: string[];
 }
 
-export interface ProjectFiltersConfig {
-  groups: FilterGroup[];
-  groupLabel: string;
-  showAll: string;
+/** Textes et libellés de la sélection reçue par lien (?focus=…). */
+export interface SelectionConfig {
+  /** slug → libellé, pour toutes les catégories. */
+  labels: Record<string, string>;
+  intro: string;
+  /** « 1 projet sur {total} » / « {n} projets sur {total} ». */
   countOne: string;
   countMany: string;
+  /** « Voir les {total} projets ». */
+  showAll: string;
 }
 
 /**
@@ -52,10 +57,11 @@ const readFocusParam = () => new URLSearchParams(window.location.search).get("fo
  *    uniquement au-dessus de la liste. Le curseur normal reste visible : on ajoute
  *    une indication, on ne retire rien. Rien sur écran tactile.
  *    Échap la ferme (WCAG 1.4.13) jusqu'à ce que la souris quitte puis retrouve la liste.
- *  - Filtres (compétence / secteur) au-dessus de la liste. Le filtre actif est
- *    écrit dans l'URL (?focus=<slug>) : Louise copie l'adresse et l'envoie à un
- *    recruteur, la page s'ouvre déjà filtrée. Les rangées sortent / rentrent
- *    avec un fondu et la liste se resserre en douceur (layout de Motion).
+ *  - Pas de filtres visibles : pour 6 projets, filtrer coûte plus que lire.
+ *    Chaque rangée affiche ses compétences sous le titre (pertinence d'un coup d'œil).
+ *  - Lien sur mesure : /?focus=<slug>#projets n'affiche que les projets de cette
+ *    catégorie, avec une phrase « Sélection pour vous : … · 4 projets sur 6 » et
+ *    un lien pour tout voir. Les rangées rentrent avec un fondu (layout de Motion).
  *  - Lien « étiré » : le lien est sur le titre, mais toute la carte est cliquable.
  *    Le nom accessible est donc le titre seul (liste de liens courte au lecteur
  *    d'écran) et il correspond au texte visible du lien (WCAG 2.5.3).
@@ -64,29 +70,23 @@ export function ProjectRows({
   rows,
   cursorLabel,
   ctaLabel,
-  filters,
+  selection,
 }: {
   rows: ProjectRow[];
   cursorLabel: string;
   /** Appel à l'action visible au repos (« Lire l'étude de cas »). */
   ctaLabel: string;
-  filters: ProjectFiltersConfig;
+  selection: SelectionConfig;
 }) {
   const fine = usePointerFine();
 
-  // ── Filtres ────────────────────────────────────────────────────────────
-  // Ne proposer que les catégories qui ont au moins un projet
-  const groups = useMemo(
+  // ── Sélection reçue par lien ───────────────────────────────────────────
+  // Seules les catégories qui ont au moins un projet sont acceptées
+  const valid = useMemo(
     () =>
-      filters.groups
-        .map((g) => ({
-          ...g,
-          options: g.options.filter((o) => rows.some((r) => r.categories.includes(o.slug))),
-        }))
-        .filter((g) => g.options.length > 0),
-    [filters.groups, rows],
+      new Set(Object.keys(selection.labels).filter((slug) => rows.some((r) => r.categories.includes(slug)))),
+    [selection.labels, rows],
   );
-  const valid = useMemo(() => new Set(groups.flatMap((g) => g.options.map((o) => o.slug))), [groups]);
   const param = useSyncExternalStore(subscribeFocus, readFocusParam, () => null);
   const focus = param && valid.has(param) ? param : null;
 
@@ -99,8 +99,10 @@ export function ProjectRows({
   }
 
   const visible = focus ? rows.filter((r) => r.categories.includes(focus)) : rows;
-  const countLabel =
-    visible.length === 1 ? filters.countOne : filters.countMany.replace("{n}", String(visible.length));
+  const total = String(rows.length);
+  const countLabel = (visible.length === 1 ? selection.countOne : selection.countMany)
+    .replace("{n}", String(visible.length))
+    .replace("{total}", total);
 
   const [active, setActive] = useState(false);
   const [dismissed, setDismissed] = useState(false);
@@ -120,14 +122,23 @@ export function ProjectRows({
 
   return (
     <>
-      <ProjectFilters
-        groups={groups}
-        focus={focus}
-        onChange={changeFocus}
-        groupLabel={filters.groupLabel}
-        showAllLabel={filters.showAll}
-        countLabel={countLabel}
-      />
+      {/* Arrivée par un lien sur mesure : on dit clairement que c'est une sélection */}
+      {focus && (
+        <div className="mt-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 rounded-md bg-surface px-5 py-4 sm:px-6">
+          <p>
+            <span className="text-fg-muted">{selection.intro}&nbsp;: </span>
+            <span className="font-semibold">{selection.labels[focus]}</span>
+            <span className="text-fg-muted"> · {countLabel}</span>
+          </p>
+          <button
+            type="button"
+            onClick={() => changeFocus(null)}
+            className="text-label font-medium text-accent underline underline-offset-4"
+          >
+            {selection.showAll.replace("{total}", total)}
+          </button>
+        </div>
+      )}
 
       <ol
         className="mt-6 border-t border-border"
@@ -200,6 +211,10 @@ export function ProjectRows({
                     </Link>
                   </h3>
                   <p className="mt-3 measure text-fg-muted">{p.tagline}</p>
+                  {/* Compétences démontrées : le recruteur repère ce qui le concerne sans cliquer */}
+                  {p.skillLabels.length > 0 && (
+                    <p className="mt-3 text-label text-fg-subtle">{p.skillLabels.join(" · ")}</p>
+                  )}
                   {/* Mobile : appel à l'action visible au repos (pas de survol sur écran tactile) */}
                   <span className="mt-5 inline-flex items-center gap-2 font-medium text-accent sm:hidden">
                     {ctaLabel}

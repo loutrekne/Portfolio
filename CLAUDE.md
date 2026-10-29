@@ -125,7 +125,7 @@ Le site est en français. Pour ajouter l'anglais :
 - **Études de cas** : nouveau gabarit (bandeau de fiche projet, « En bref » avec défi + chiffres, sommaire collant qui suit la lecture, projet suivant).
 - **Mobile** : retours visuels à l'appui, aucun effet de survol collé, correctif iOS `:active`.
 - Typographie française automatique (`fr()`).
-- TechniCenter passé en étude de cas complète (6 projets), filtres compétence / secteur avec liens recruteurs (§11).
+- TechniCenter passé en étude de cas complète (6 projets), liens recruteurs par catégorie et compétences affichées sur chaque projet (§11).
 - Agents de revue Cursor `ux-review` et `a11y-audit` (§10) ; audit axe : 0 violation sur 7 pages × 4 configurations.
 
 ⏳ À faire, par priorité
@@ -161,13 +161,13 @@ Le motif du site est **le trait dessiné à la main**, en terracotta, qui prolon
 | `DrawnUnderline` | Soulignement au feutre au survol (CSS pur, utilisable côté serveur) : nav, footer, bouton « ghost » |
 | `PortraitSticker` | Portrait du hero, sans arche : encre + passage terracotta décalé (effet risographie) qui suit la souris ; se tire à la souris (élastique). Thème sombre : même dessin à l'encre, sur une arche craie (`--portrait-sheet`). Le hero le superpose au texte (même rangée de grille, à partir de xl) |
 | `PortraitDrawing` | Le dessin qui se trace (contours de haut en bas, puis l'encre), puis cligne des yeux et suit la souris ; un clic le redessine. Option `wash` : passage terracotta décalé. Encre = `--portrait-ink` (toujours encre : un dessin inversé en blanc donne un négatif). Données générées dans `portrait-paths.ts` |
-| `ProjectRows` | Liste des projets filtrable (§11), visiblement cliquable au repos : pastille flèche (desktop) ou « Lire l'étude de cas → » (mobile). Titre souligné au survol / à l'appui + pastille « Voir le projet → » qui suit la souris |
+| `ProjectRows` | Liste des projets (sélection par lien, §11), compétences sous chaque titre, visiblement cliquable au repos : pastille flèche (desktop) ou « Lire l'étude de cas → » (mobile). Titre souligné au survol / à l'appui + pastille « Voir le projet → » qui suit la souris |
 
 Règles : un trait répond à un geste ou accompagne une arrivée, jamais en boucle. Sur écran tactile, pas de pastille ni de glisser ; un tap dans l'en-tête pince la corde (HeaderString). Les tracés utilisent `pathLength={1}` + `strokeDashoffset` **sans** `vector-effect="non-scaling-stroke"` (Chrome découpe le trait en pointillés sinon).
 
 ## 10. Agents de revue (Cursor)
 
-Deux sous-agents dans `.cursor/agents/`, à appeler dans le chat de Cursor. Ils ne modifient jamais le code : ils écrivent un rapport priorisé (P0 / P1 / P2) dans `docs/reviews/`.
+Deux sous-agents de revue dans `.cursor/agents/` (plus l'agent `candidature`, §12), à appeler dans le chat de Cursor. Ils ne modifient jamais le code : ils écrivent un rapport priorisé (P0 / P1 / P2) dans `docs/reviews/`.
 
 | Agent | Appel | Ce qu'il fait |
 |---|---|---|
@@ -176,9 +176,9 @@ Deux sous-agents dans `.cursor/agents/`, à appeler dans le chat de Cursor. Ils 
 
 Les captures et le JSON d'axe sont ignorés par Git ; les rapports `.md` sont versionnés.
 
-## 11. Filtres et liens recruteurs
+## 11. Liens recruteurs (sélection par catégorie)
 
-La liste « Projets sélectionnés » se filtre par **compétence** ou par **secteur** (un filtre à la fois). Le filtre actif est écrit dans l'URL : on copie l'adresse et on l'envoie, la page s'ouvre déjà filtrée.
+Pas de filtres visibles sur l'accueil : pour 6 projets, filtrer coûte plus que lire. Chaque projet affiche ses compétences sous son titre. Pour un·e recruteur·se, Louise envoie un **lien sur mesure** : l'accueil s'ouvre avec seulement les projets de la catégorie, une phrase « Sélection pour vous : Design system · 4 projets sur 6 » et un lien « Voir les 6 projets ».
 
 | Pour un poste orienté… | Lien (ajouter le domaine devant) |
 |---|---|
@@ -192,6 +192,17 @@ La liste « Projets sélectionnés » se filtre par **compétence** ou par **sec
 | Logistique | `/?focus=logistique#projets` |
 | Grand public (B2C) | `/?focus=grand-public#projets` |
 
-- Catégories : types `SkillCategory` / `SectorCategory` (`src/content/types.ts`), libellés dans `site.filters` (`src/content/fr/site.ts`), et champs `skills` / `sectors` dans chaque fichier projet.
-- Une catégorie sans projet n'est pas affichée. Un `focus` inconnu est ignoré (liste complète).
-- Composants : `ProjectFilters` (pastilles, `aria-pressed`, nombre annoncé) et `ProjectRows` (l'URL est la source de vérité, via `useSyncExternalStore`).
+- Catégories : types `SkillCategory` / `SectorCategory` (`src/content/types.ts`), libellés et phrases dans `site.filters` (`src/content/fr/site.ts`), champs `skills` / `sectors` dans chaque fichier projet.
+- Un `focus` inconnu ou sans projet est ignoré (liste complète).
+- `ProjectRows` : l'URL est la source de vérité (`useSyncExternalStore`) ; « Voir les N projets » retire le paramètre sans recharger.
+
+## 12. Candidatures sur mesure (/pour/<entreprise>)
+
+Une page par candidature : mot d'accueil à l'équipe, « ce que vous cherchez → le projet qui le prouve », projets à lire en premier, contact. Jamais indexée (`robots: noindex`).
+
+- **Préparer** : coller l'offre dans le chat de Cursor et lancer `/candidature`. L'agent (`.cursor/agents/candidature.md`) crée `src/content/fr/candidatures/<slug>.ts` en **brouillon**, l'ajoute à `candidatures/index.ts`, et rend le tableau attente → projet → preuve. Il n'invente rien : les preuves viennent des fichiers projets.
+- **Relire** : `npm run dev`, ouvrir `http://localhost:3000/pour/<slug>`. Réécrire le mot d'accueil, vérifier chaque preuve.
+- **Publier** : passer `status` à `"prete"`, commit, push, envoyer `https://<domaine>/pour/<slug>`.
+- Les brouillons n'existent pas en production (404). `exemple.ts` est un modèle fictif, toujours en brouillon.
+- Code : type `Candidature` (`src/content/types.ts`), `getCandidature()` (`src/content/index.ts`), page `src/app/pour/[slug]/page.tsx`.
+- Pas de suivi individuel des visites (RGPD) : des statistiques anonymes suffisent.

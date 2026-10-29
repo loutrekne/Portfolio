@@ -145,16 +145,14 @@ export interface SiteContent {
   location: string;
   meta: { title: string; description: string };
   nav: NavItem[];
-  /** Filtres de la liste de projets (accueil). */
+  /** Catégories des projets : libellés + phrase de la sélection reçue par lien (?focus=…). */
   filters: {
-    /** Nom du groupe de filtres, pour les lecteurs d'écran. */
-    groupLabel: string;
-    skillsLabel: string;
-    sectorsLabel: string;
-    showAll: string;
-    /** « 1 projet » / « {n} projets » (n remplacé à l'affichage). */
+    selectionIntro: string;
+    /** « 1 projet sur {total} » / « {n} projets sur {total} ». */
     countOne: string;
     countMany: string;
+    /** « Voir les {total} projets ». */
+    showAll: string;
     skills: Record<SkillCategory, string>;
     sectors: Record<SectorCategory, string>;
   };
@@ -202,6 +200,15 @@ export interface SiteContent {
     | "tools"
     | "challenge"
     | "inBrief"
+    | "candEyebrow"
+    | "candHello"
+    | "candSignature"
+    | "candNeedsEyebrow"
+    | "candNeedsTitle"
+    | "candSeeProject"
+    | "candProjects"
+    | "candAllWork"
+    | "candDraft"
     | "theProject"
     | "onThisPage"
     | "allProjects"
@@ -216,4 +223,35 @@ export interface SiteContent {
     | "notFoundText",
     string
   >;
+}
+
+/**
+ * Page de candidature sur mesure : /pour/<slug>.
+ * Préparée par l'agent Cursor `candidature` à partir d'une offre d'emploi,
+ * RELUE ET RÉÉCRITE par Louise avant envoi.
+ */
+export interface Candidature {
+  /** Segment d'URL : /pour/<slug> (kebab-case, nom de l'entreprise). */
+  slug: string;
+  /** "brouillon" : visible seulement en local (npm run dev), jamais en production. */
+  status: "brouillon" | "prete";
+  company: string;
+  role: string;
+  /** Date de préparation, ex. "Novembre 2026". */
+  date: string;
+  /** Lien de l'offre (pour mémoire, non affiché). */
+  offerUrl?: string;
+  /** 2 ou 3 phrases, à la première personne, écrites (ou réécrites) par Louise. */
+  greeting: string;
+  /** Ce que l'offre demande → le projet qui le prouve. 3 ou 4 lignes. */
+  matches: {
+    /** L'attente, reprise de l'offre (courte). */
+    need: string;
+    /** Slug d'un projet « featured ». */
+    project: string;
+    /** Pourquoi ce projet répond à l'attente : un FAIT tiré de l'étude de cas. */
+    proof: string;
+  }[];
+  /** Projets à lire en premier, dans l'ordre (slugs). */
+  projects: string[];
 }

@@ -54,6 +54,10 @@ Ils ne modifient jamais le code : ils écrivent un rapport priorisé (P0 / P1 / 
 
 Les corrections issues d'un rapport se font ensuite, constat par constat, à la demande de Louise.
 
+## 7. Agent de candidature (`.cursor/agents/candidature.md`)
+
+`/candidature` + une offre d'emploi collée : crée une page `/pour/<entreprise>` en brouillon (attentes de l'offre → projets qui les prouvent, sans rien inventer). Louise relit, réécrit le mot d'accueil et publie. Détails : `CLAUDE.md` §12.
+
 ---
 
 <!-- BEGIN:nextjs-agent-rules -->

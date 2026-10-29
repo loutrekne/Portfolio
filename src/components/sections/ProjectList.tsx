@@ -5,11 +5,12 @@ import { fr } from "@/lib/typo";
 
 /**
  * Section « Projets sélectionnés ». Les données sont lues ici (composant
- * serveur) ; l'affichage interactif (filtres + liste) est dans ProjectRows.
+ * serveur) ; l'affichage interactif (liste + sélection reçue par lien) est dans ProjectRows.
  * Liens à envoyer aux recruteurs : /?focus=<slug>#projets (voir CLAUDE.md §11).
  */
 export function ProjectList() {
   const { featured, site } = getContent();
+  const f = site.filters;
   const rows = featured.map(({ slug, index, client, sector, title, tagline, period, skills, sectors }) => ({
     slug,
     index,
@@ -19,17 +20,14 @@ export function ProjectList() {
     tagline: fr(tagline),
     period,
     categories: [...skills, ...sectors],
+    skillLabels: skills.map((s) => f.skills[s]),
   }));
-  const f = site.filters;
-  const filters = {
-    groupLabel: f.groupLabel,
-    showAll: f.showAll,
+  const selection = {
+    labels: { ...f.skills, ...f.sectors } as Record<string, string>,
+    intro: f.selectionIntro,
     countOne: f.countOne,
     countMany: f.countMany,
-    groups: [
-      { label: f.skillsLabel, options: Object.entries(f.skills).map(([slug, label]) => ({ slug, label })) },
-      { label: f.sectorsLabel, options: Object.entries(f.sectors).map(([slug, label]) => ({ slug, label })) },
-    ],
+    showAll: f.showAll,
   };
   return (
     <section id="projets" className="container-site section-y">
@@ -38,7 +36,7 @@ export function ProjectList() {
         rows={rows}
         cursorLabel={site.ui.seeProject}
         ctaLabel={site.ui.readCase}
-        filters={filters}
+        selection={selection}
       />
     </section>
   );
