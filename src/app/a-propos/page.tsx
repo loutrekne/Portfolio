@@ -3,6 +3,7 @@ import { getContent } from "@/content";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Tag } from "@/components/ui/Tag";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Portrait } from "@/components/ui/Portrait";
 import type { TimelineItem } from "@/content/types";
 
 export const metadata: Metadata = { title: "À propos" };
@@ -49,7 +50,7 @@ export default function AboutPage() {
           ))}
         </div>
         <aside className="lg:pt-2">
-          {/* TODO(louise) : ajouter un portrait dans /public/images/portrait.jpg */}
+          <Portrait alt={site.ui.portraitAlt} className="mb-8 w-full max-w-[18rem]" />
           <ButtonLink href={site.contact.cvHref} arrow>
             {site.ui.downloadCv}
           </ButtonLink>

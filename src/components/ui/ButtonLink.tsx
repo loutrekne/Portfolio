@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
+import { DrawnUnderline } from "@/components/trait/DrawnUnderline";
 
 type Variant = "primary" | "secondary" | "ghost";
 
 const styles: Record<Variant, string> = {
   primary: "bg-btn text-btn-fg",
   secondary: "border border-border-strong text-fg hover:border-fg",
-  ghost: "text-fg hover:bg-surface-muted",
+  ghost: "text-fg",
 };
 
 /**
@@ -35,7 +36,7 @@ export function ButtonLink({
   );
   const content = (
     <>
-      {children}
+      {variant === "ghost" ? <DrawnUnderline>{children}</DrawnUnderline> : children}
       {arrow && (
         <span aria-hidden className="arrow">
           →
@@ -49,7 +50,11 @@ export function ButtonLink({
       {content}
     </Link>
   ) : (
-    <a href={href} className={classes} {...(href.endsWith(".pdf") && { target: "_blank", rel: "noopener noreferrer" })} >
+    <a
+      href={href}
+      className={classes}
+      {...(href.endsWith(".pdf") && { target: "_blank", rel: "noopener noreferrer" })}
+    >
       {content}
     </a>
   );

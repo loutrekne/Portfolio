@@ -30,6 +30,8 @@
   --color-btn: var(--btn-bg);
   --color-btn-fg: var(--btn-fg);
   --color-success: var(--success);
+  --color-portrait-ink: var(--portrait-ink);
+  --color-portrait-bg: var(--portrait-bg);
 
   /* Une seule famille, injectée par next/font (layout.tsx) */
   --font-sans: var(--font-figtree), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -61,6 +63,8 @@
   --radius-pill: var(--rounded-pill);
 
   --shadow-soft: var(--shadow-soft);
+  --shadow-sticker: var(--sticker-shadow);
+  --font-hand: var(--font-caveat), "Bradley Hand", "Segoe Print", cursive;
   --ease-out: var(--ease-standard);
   --ease-spring: var(--ease-spring);
   --ease-bounce: var(--ease-bounce);
@@ -224,6 +228,35 @@
     border-color: var(--border-strong);
     box-shadow: var(--shadow-soft);
   }
+}
+
+/* 6 · Soulignement au feutre (composant DrawnUnderline) : le trait se
+   dessine sous le texte au survol ou au focus clavier du lien parent. */
+.drawn-ul {
+  position: absolute;
+  left: 0;
+  bottom: -0.32em;
+  width: 100%;
+  height: 0.45em;
+  overflow: visible;
+  pointer-events: none;
+}
+.drawn-ul path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition:
+    stroke-dashoffset var(--duration-spring) var(--ease-standard),
+    opacity 0.1s;
+}
+:where(a, button, .group):hover .drawn-ul path,
+:where(a, button, .group):focus-visible .drawn-ul path {
+  stroke-dashoffset: 0;
+  opacity: 1;
 }
 
 /* Accessibilité : tout s'arrête si l'utilisateur préfère moins de mouvement. */

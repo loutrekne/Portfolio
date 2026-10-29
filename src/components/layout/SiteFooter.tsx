@@ -1,4 +1,5 @@
 import { getContent } from "@/content";
+import { DrawnUnderline } from "@/components/trait/DrawnUnderline";
 
 export function SiteFooter() {
   const { site } = getContent();
@@ -16,12 +17,12 @@ export function SiteFooter() {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <span className="mark">LinkedIn</span>
+              <DrawnUnderline>LinkedIn</DrawnUnderline>
             </a>
           </li>
           <li>
             <a href={site.contact.cvHref} target="_blank" rel="noopener noreferrer" className="hover:text-fg">
-              <span className="mark">CV</span>
+              <DrawnUnderline>CV</DrawnUnderline>
             </a>
           </li>
         </ul>

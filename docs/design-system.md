@@ -42,8 +42,8 @@ Une seule famille : **Figtree** (variable, avec italiques). Humaniste et ouverte
 
 | Token | Taille | Interlignage | Approche |
 |---|---|---|---|
-| `text-display` | 42 → 88 px | 1.04 | −0.03em |
-| `text-h1` | 36 → 68 px | 1.04 | −0.03em |
+| `text-display` | 34 → 54 px | 1.04 | −0.03em |
+| `text-h1` | 30 → 48 px | 1.04 | −0.03em |
 | `text-h2` | 26 → 42 px | 1.2 | −0.018em |
 | `text-h3` | 19 → 24 px | 1.2 | −0.018em |
 | `text-lead` | 18 → 21 px | 1.55 | |

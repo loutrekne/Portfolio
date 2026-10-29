@@ -25,7 +25,7 @@ Ambiance (v2, d'après les retours de Louise) : **naturelle, minimaliste, humain
 | Styles | **Tailwind CSS 4.3**, config CSS-first (`@theme`) | Pas de `tailwind.config.js` en v4 : la config vit dans `src/app/globals.css` |
 | Tokens | `src/styles/tokens.css` (CSS custom properties pures) | Agnostique du framework, comme le DS V2 d'Ingeli |
 | Police | `next/font/google` : Figtree (variable + italiques) | Auto-hébergée au build, zéro CLS |
-| Animations | CSS (`linear()` pour les ressorts) + 5 petits composants client | Aucune librairie d'animation |
+| Animations | **Motion** (`motion/react`) + CSS (`linear()` pour les ressorts simples) | Vrais ressorts physiques, glisser-déposer, tracés SVG ; respecte « réduire les animations » via `MotionProvider` |
 | Contenu | Fichiers TS typés dans `src/content/fr/` | Pas de CMS ; i18n-ready |
 | Qualité | ESLint (flat config `eslint-config-next`), Prettier + plugin Tailwind | |
 | Déploiement | Vercel (recommandé) | Preview par branche, domaine perso |
@@ -59,7 +59,8 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
     │       ├── about.ts
     │       └── projects/     ← un fichier par slug + index.ts
     ├── components/
-    │   ├── interactions/ ThemeScript, ThemeToggle, HeaderShell, RevealObserver, CopyEmailButton, CountUp
+    │   ├── interactions/ ThemeScript, ThemeToggle, HeaderShell, RevealObserver, CopyEmailButton, CountUp, MotionProvider
+    │   ├── trait/    LE TRAIT : HeaderString, Scribble, DrawnRule, DrawnUnderline, PortraitSticker, ProjectRows
     │   ├── layout/   SiteHeader, SiteFooter
     │   ├── sections/ Hero, ProjectList, Principles, OtherWork, ContactCta
     │   ├── project/  SpecSheet, CaseSectionBlock, Outcomes, PullQuote
@@ -142,3 +143,20 @@ npm run lint
 npm run build
 npm run format
 ```
+
+## 9. Le trait (langage graphique)
+
+Le motif du site est **le trait dessiné à la main**, en terracotta, qui prolonge le portrait dessiné de Louise. Tous les composants sont dans `src/components/trait/` :
+
+| Composant | Rôle |
+|---|---|
+| `HeaderString` | Corde fine sous l'en-tête : se courbe vers la souris, se teinte de terracotta, revient en vibrant |
+| `Scribble` | Trait SVG qui se dessine : `circle` (mot entouré), `underline`, `arrow` ; modes `mount`, `inView`, `parent` |
+| `DrawnRule` | Séparateur de section qui se trace en terracotta puis redevient neutre |
+| `DrawnUnderline` | Soulignement au feutre au survol (CSS pur, utilisable côté serveur) : nav, footer, bouton « ghost » |
+| `PortraitSticker` | Portrait du hero, sans arche : encre + passage terracotta décalé (effet risographie) qui suit la souris ; se tire à la souris (élastique), note « c'est moi ! ». Thème sombre : même dessin à l'encre, sur une arche craie (`--portrait-sheet`). Le hero le superpose au texte (même rangée de grille, à partir de xl) |
+| `PortraitDrawing` | Le dessin qui se trace (contours de haut en bas, puis l'encre), puis cligne des yeux et suit la souris ; un clic le redessine. Option `wash` : passage terracotta décalé. Encre = `--portrait-ink` (toujours encre : un dessin inversé en blanc donne un négatif). Données générées dans `portrait-paths.ts` |
+| `ProjectRows` | Liste des projets : titre souligné au survol + pastille « Voir le projet → » qui suit la souris |
+
+Règles : un trait répond à un geste ou accompagne une arrivée, jamais en boucle. Sur écran tactile, pas de pastille ni de glisser. Les tracés utilisent `pathLength={1}` + `strokeDashoffset` **sans** `vector-effect="non-scaling-stroke"` (Chrome découpe le trait en pointillés sinon).
+

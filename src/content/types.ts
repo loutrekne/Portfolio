@@ -142,6 +142,9 @@ export interface SiteContent {
   /** Micro-textes d'interface (boutons, labels). */
   ui: Record<
     | "skipLink"
+    | "portraitAlt"
+    | "portraitNote"
+    | "seeProject"
     | "copied"
     | "themeLight"
     | "themeDark"

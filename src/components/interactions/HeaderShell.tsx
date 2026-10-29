@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { HeaderString } from "@/components/trait/HeaderString";
 
 /**
  * En-tête qui s'efface quand on descend (place à la lecture) et revient dès
- * qu'on remonte. Un filet apparaît une fois la page défilée.
+ * qu'on remonte. Sous l'en-tête, une corde (HeaderString) réagit à la souris.
  */
 export function HeaderShell({ children }: { children: React.ReactNode }) {
   const [hidden, setHidden] = useState(false);
@@ -33,16 +34,17 @@ export function HeaderShell({ children }: { children: React.ReactNode }) {
     <header
       // Ne jamais cacher l'en-tête quand un élément y a le focus clavier
       onFocusCapture={() => setHidden(false)}
-      className="sticky top-0 z-40 transition-[transform,background-color,border-color] duration-500 ease-spring"
+      className="sticky top-0 z-40 transition-[transform,background-color] duration-500 ease-spring"
       style={{
         transform: hidden ? "translateY(-100%)" : "none",
         backgroundColor: scrolled ? "color-mix(in srgb, var(--bg) 82%, transparent)" : "transparent",
-        borderBottom: `1px solid ${scrolled ? "var(--border)" : "transparent"}`,
         backdropFilter: scrolled ? "blur(12px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
       }}
     >
       {children}
+      {/* Le trait sous l'en-tête, qui se courbe vers la souris */}
+      <HeaderString />
     </header>
   );
 }

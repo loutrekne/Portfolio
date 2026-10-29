@@ -28,6 +28,9 @@ export const site: SiteContent = {
   },
   ui: {
     skipLink: "Aller au contenu",
+    portraitAlt: "Portrait dessiné de Louise Knoery",
+    portraitNote: "c'est moi !",
+    seeProject: "Voir le projet",
     copied: "Adresse copiée",
     themeLight: "Passer en mode clair",
     themeDark: "Passer en mode sombre",

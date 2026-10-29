@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getContent } from "@/content";
 import { HeaderShell } from "@/components/interactions/HeaderShell";
 import { ThemeToggle } from "@/components/interactions/ThemeToggle";
+import { DrawnUnderline } from "@/components/trait/DrawnUnderline";
 
 /** En-tête : nom, navigation (liens surlignés au survol), CV, bascule de thème. */
 export function SiteHeader() {
@@ -9,21 +10,32 @@ export function SiteHeader() {
   return (
     <HeaderShell>
       <div className="container-site flex h-16 items-center justify-between gap-6">
-        <Link href="/" className="font-semibold tracking-tight">
-          <span className="mark">{site.name}</span>
+        <Link href="/" className="font-semibold tracking-tight whitespace-nowrap">
+          {site.name}
         </Link>
         <nav aria-label="Navigation principale" className="flex items-center gap-1 sm:gap-3">
           <ul className="flex items-center gap-4 text-small sm:gap-7">
             {site.nav.map((item) => (
-              <li key={item.href}>
+              // Sur mobile, « Contact » est masqué : le hero a déjà un bouton « Me contacter »
+              <li
+                key={item.href}
+                className={
+                  item.href === "/#contact" ? "hidden whitespace-nowrap sm:block" : "whitespace-nowrap"
+                }
+              >
                 <Link href={item.href} className="text-fg-muted transition-colors hover:text-fg">
-                  <span className="mark">{item.label}</span> 
+                  <DrawnUnderline>{item.label}</DrawnUnderline>
                 </Link>
               </li>
             ))}
             <li className="hidden sm:block">
-            <a href={site.contact.cvHref} target="_blank" rel="noopener noreferrer" className="text-fg-muted transition-colors hover:text-fg">
-                <span className="mark">CV</span>
+              <a
+                href={site.contact.cvHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-fg-muted transition-colors hover:text-fg"
+              >
+                <DrawnUnderline>CV</DrawnUnderline>
               </a>
             </li>
           </ul>

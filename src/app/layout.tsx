@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Caveat, Figtree } from "next/font/google";
 import { getContent, defaultLocale } from "@/content";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ThemeScript } from "@/components/interactions/ThemeScript";
 import { RevealObserver } from "@/components/interactions/RevealObserver";
+import { MotionProvider } from "@/components/interactions/MotionProvider";
 import "./globals.css";
 
 /**
@@ -13,6 +14,8 @@ import "./globals.css";
  * Auto-hébergée par next/font : aucun appel à Google au runtime.
  */
 const figtree = Figtree({ variable: "--font-figtree", subsets: ["latin"], style: ["normal", "italic"] });
+/** Écriture manuscrite, réservée aux petites notes (« c'est moi ! »). */
+const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500", "600"] });
 
 const { site } = getContent();
 
@@ -28,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={defaultLocale}
-      className={`${figtree.variable} antialiased`}
+      className={`${figtree.variable} ${caveat.variable} antialiased`}
       // le script de thème modifie data-theme avant l'hydratation
       suppressHydrationWarning
     >
@@ -42,11 +45,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           {site.ui.skipLink}
         </a>
-        <SiteHeader />
-        <main id="contenu" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+        <MotionProvider>
+          <SiteHeader />
+          <main id="contenu" className="flex-1">
+            {children}
+          </main>
+          <SiteFooter />
+        </MotionProvider>
         <RevealObserver />
       </body>
     </html>
