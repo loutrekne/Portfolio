@@ -20,7 +20,7 @@ export function SiteFooter() {
             </a>
           </li>
           <li>
-            <a href={site.contact.cvHref} className="hover:text-fg">
+            <a href={site.contact.cvHref} target="_blank" rel="noopener noreferrer" className="hover:text-fg">
               <span className="mark">CV</span>
             </a>
           </li>

@@ -49,7 +49,7 @@ export function ButtonLink({
       {content}
     </Link>
   ) : (
-    <a href={href} className={classes}>
+    <a href={href} className={classes} {...(href.endsWith(".pdf") && { target: "_blank", rel: "noopener noreferrer" })} >
       {content}
     </a>
   );

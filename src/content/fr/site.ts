@@ -19,8 +19,8 @@ export const site: SiteContent = {
     { label: "Contact", href: "/#contact" },
   ],
   contact: {
-    email: "TODO@email.fr",
-    linkedin: "https://www.linkedin.com/in/TODO",
+    email: "louise.knoery@gmail.com",
+    linkedin: "https://www.linkedin.com/in/louise-knoery/",
     cvHref: "/cv/louise-knoery-cv.pdf",
     ctaTitle: "Construisons quelque chose d'utile, ensemble.",
     ctaText:

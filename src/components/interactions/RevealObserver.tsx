@@ -6,47 +6,44 @@ import { usePathname } from "next/navigation";
 /**
  * Apparition douce des blocs `.reveal` quand ils entrent à l'écran.
  *
- * Règle d'or : la page est complète sans JS. Seuls les éléments situés SOUS
- * la ligne de flottaison au chargement sont masqués (data-reveal="pending"),
- * puis révélés une fois visibles. Les blocs déjà à l'écran ne bougent pas.
- * Désactivé si l'utilisateur préfère moins de mouvement, et tout est révélé
- * avant une impression.
+ * Utilise la Web Animations API (`element.animate`) : aucun attribut ni
+ * classe n'est modifié sur le DOM rendu par React, donc aucune erreur
+ * d'hydratation, et la page reste complète sans JS (rien n'est masqué
+ * à l'avance). Les blocs déjà visibles au chargement ne bougent pas.
+ * Désactivé si l'utilisateur préfère moins de mouvement.
  */
 export function RevealObserver() {
   const pathname = usePathname();
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const els = Array.from(document.querySelectorAll<HTMLElement>(".reveal:not([data-reveal])"));
-    const below = els.filter((el) => el.getBoundingClientRect().top > window.innerHeight * 0.92);
+    if (typeof Element.prototype.animate !== "function") return;
 
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          // Petit décalage entre voisins pour un effet "en cascade"
-          const siblings = el.parentElement ? Array.from(el.parentElement.children) : [];
-          const i = Math.max(0, siblings.indexOf(el));
-          el.style.transitionDelay = `${Math.min(i, 4) * 60}ms`;
-          el.dataset.reveal = "shown";
-          io.unobserve(el);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px" },
+    // Seulement les blocs SOUS la ligne de flottaison au chargement.
+    const below = Array.from(document.querySelectorAll<HTMLElement>(".reveal")).filter(
+      (el) => el.getBoundingClientRect().top > window.innerHeight,
     );
 
-    below.forEach((el) => {
-      el.dataset.reveal = "pending";
-      io.observe(el);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target as HTMLElement;
+        io.unobserve(el);
+        // Petit décalage entre voisins pour un effet "en cascade" (max 240 ms)
+        const siblings = el.parentElement ? Array.from(el.parentElement.children) : [];
+        const delay = Math.min(Math.max(0, siblings.indexOf(el)), 4) * 60;
+        el.animate(
+          [
+            { opacity: 0, transform: "translateY(18px)" },
+            { opacity: 1, transform: "none" },
+          ],
+          { duration: 700, delay, easing: "cubic-bezier(0.22, 1, 0.36, 1)", fill: "backwards" },
+        );
+      });
     });
 
-    const showAll = () => below.forEach((el) => (el.dataset.reveal = "shown"));
-    window.addEventListener("beforeprint", showAll);
-    return () => {
-      io.disconnect();
-      window.removeEventListener("beforeprint", showAll);
-    };
+    below.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, [pathname]);
 
   return null;

@@ -195,19 +195,7 @@
   animation: breathe 2.8s var(--ease-standard) infinite;
 }
 
-/* 4 · Apparition au scroll — pilotée par <RevealObserver /> (layout.tsx).
-   Sans JS, rien n'est masqué : data-reveal n'est posé que par le script. */
-.reveal[data-reveal] {
-  transition:
-    opacity var(--duration-slow) var(--ease-standard),
-    transform var(--duration-slow) var(--ease-spring);
-}
-.reveal[data-reveal="pending"] {
-  opacity: 0;
-  transform: translateY(18px);
-}
-
-/* 5 · Barre de lecture des études de cas — liée au scroll, sans JS. */
+/* 4 · Barre de lecture des études de cas — liée au scroll, sans JS. */
 @keyframes grow-x {
   from {
     transform: scaleX(0);
@@ -225,7 +213,7 @@
   }
 }
 
-/* 6 · Carte qui se soulève (principes, autres projets). */
+/* 5 · Carte qui se soulève (principes, autres projets). */
 @utility lift {
   transition:
     transform var(--duration-spring) var(--ease-spring),
