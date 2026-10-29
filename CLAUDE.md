@@ -64,7 +64,7 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
     │   ├── layout/   SiteHeader, SiteFooter
     │   ├── sections/ Hero, ProjectList, Principles, OtherWork, ContactCta
     │   ├── project/  SpecSheet, CaseSectionBlock, Outcomes, PullQuote
-    │   └── ui/       Eyebrow, ButtonLink, Tag, MediaPlaceholder
+    │   └── ui/       Eyebrow, SectionHeader (label + titre + intro, pour toutes les sections), ButtonLink, Tag, MediaPlaceholder
     └── lib/cn.ts
 ```
 
@@ -154,7 +154,7 @@ Le motif du site est **le trait dessiné à la main**, en terracotta, qui prolon
 | `Scribble` | Trait SVG qui se dessine : `circle` (mot entouré), `underline`, `arrow` ; modes `mount`, `inView`, `parent` |
 | `DrawnRule` | Séparateur de section qui se trace en terracotta puis redevient neutre |
 | `DrawnUnderline` | Soulignement au feutre au survol (CSS pur, utilisable côté serveur) : nav, footer, bouton « ghost » |
-| `PortraitSticker` | Portrait du hero, sans arche : encre + passage terracotta décalé (effet risographie) qui suit la souris ; se tire à la souris (élastique), note « c'est moi ! ». Thème sombre : même dessin à l'encre, sur une arche craie (`--portrait-sheet`). Le hero le superpose au texte (même rangée de grille, à partir de xl) |
+| `PortraitSticker` | Portrait du hero, sans arche : encre + passage terracotta décalé (effet risographie) qui suit la souris ; se tire à la souris (élastique). Thème sombre : même dessin à l'encre, sur une arche craie (`--portrait-sheet`). Le hero le superpose au texte (même rangée de grille, à partir de xl) |
 | `PortraitDrawing` | Le dessin qui se trace (contours de haut en bas, puis l'encre), puis cligne des yeux et suit la souris ; un clic le redessine. Option `wash` : passage terracotta décalé. Encre = `--portrait-ink` (toujours encre : un dessin inversé en blanc donne un négatif). Données générées dans `portrait-paths.ts` |
 | `ProjectRows` | Liste des projets : titre souligné au survol + pastille « Voir le projet → » qui suit la souris |
 

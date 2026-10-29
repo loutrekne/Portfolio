@@ -40,6 +40,11 @@ export const site: SiteContent = {
     selectedWork: "Projets sélectionnés",
     otherWork: "Aussi chez Ingeli",
     howIWork: "Comment je travaille",
+    howIWorkTitle: "Quatre réflexes, sur chaque projet.",
+    howIWorkIntro:
+      "Comprendre les utilisateurs, concevoir avec l'équipe, et suivre le design jusque dans le code. Pour qu'il reste simple une fois livré.",
+    otherWorkTitle: "D'autres chantiers, en parallèle.",
+    otherWorkIntro: "Des projets plus courts, ou menés en continu à côté des projets clients.",
     readCase: "Lire l'étude de cas",
     nextProject: "Projet suivant",
     backHome: "Retour à l'accueil",
