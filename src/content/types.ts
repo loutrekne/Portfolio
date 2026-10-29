@@ -143,7 +143,6 @@ export interface SiteContent {
   ui: Record<
     | "skipLink"
     | "portraitAlt"
-    | "portraitNote"
     | "seeProject"
     | "copied"
     | "themeLight"

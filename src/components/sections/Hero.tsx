@@ -24,7 +24,6 @@ export function Hero() {
     <section className="container-site grid items-center pt-14 pb-12 sm:pt-20 xl:grid-cols-12 xl:pt-16">
       <PortraitSticker
         alt={site.ui.portraitAlt}
-        note={site.ui.portraitNote}
         className="mx-auto w-60 sm:ml-0 sm:w-72 xl:col-span-7 xl:col-start-6 xl:row-start-1 xl:mx-0 xl:w-full xl:max-w-[38rem] xl:justify-self-end"
       />
       <div className="relative z-10 -mt-8 sm:-mt-10 xl:col-span-8 xl:col-start-1 xl:row-start-1 xl:mt-0">

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { usePointerFine } from "@/lib/usePointerFine";
-import { Scribble } from "./Scribble";
 import { PortraitDrawing } from "./PortraitDrawing";
 
 /**
@@ -17,35 +16,14 @@ import { PortraitDrawing } from "./PortraitDrawing";
  *    l'encre ; il bouge ensuite avec la souris (PortraitDrawing `wash`).
  *  - À la souris, on peut le TIRER : il s'étire comme un élastique et
  *    revient à sa place avec un ressort quand on le lâche.
- *  - Une note manuscrite (« c'est moi ! ») et sa flèche se dessinent à l'arrivée.
  *  - Un clic le redessine.
  */
-export function PortraitSticker({ alt, note, className }: { alt: string; note: string; className?: string }) {
+export function PortraitSticker({ alt, className }: { alt: string; className?: string }) {
   const fine = usePointerFine();
   const [replay, setReplay] = useState(0);
 
   return (
     <div className={`relative aspect-[1871/1946] ${className ?? ""}`}>
-      {/* Note manuscrite + flèche */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-8 -right-2 z-20 flex rotate-6 flex-col items-end xl:-top-6 xl:-right-10"
-      >
-        <motion.span
-          className="font-hand text-2xl leading-none font-semibold text-accent lg:text-3xl"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.5 }}
-        >
-          {note}
-        </motion.span>
-        <Scribble
-          variant="arrow"
-          delay={0.9}
-          className="mt-1 h-14 w-16 -scale-x-100 text-accent"
-        />
-      </div>
-
       <motion.div
         className={`absolute inset-0 ${fine ? "cursor-grab active:cursor-grabbing" : ""}`}
         whileHover={{ y: -4 }}

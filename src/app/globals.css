@@ -64,7 +64,6 @@
 
   --shadow-soft: var(--shadow-soft);
   --shadow-sticker: var(--sticker-shadow);
-  --font-hand: var(--font-caveat), "Bradley Hand", "Segoe Print", cursive;
   --ease-out: var(--ease-standard);
   --ease-spring: var(--ease-spring);
   --ease-bounce: var(--ease-bounce);

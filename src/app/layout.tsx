@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, Figtree } from "next/font/google";
+import { Figtree } from "next/font/google";
 import { getContent, defaultLocale } from "@/content";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -14,8 +14,7 @@ import "./globals.css";
  * Auto-hébergée par next/font : aucun appel à Google au runtime.
  */
 const figtree = Figtree({ variable: "--font-figtree", subsets: ["latin"], style: ["normal", "italic"] });
-/** Écriture manuscrite, réservée aux petites notes (« c'est moi ! »). */
-const caveat = Caveat({ variable: "--font-caveat", subsets: ["latin"], weight: ["500", "600"] });
+
 
 const { site } = getContent();
 
@@ -31,7 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={defaultLocale}
-      className={`${figtree.variable} ${caveat.variable} antialiased`}
+      className={`${figtree.variable} antialiased`}
       // le script de thème modifie data-theme avant l'hydratation
       suppressHydrationWarning
     >
