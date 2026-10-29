@@ -23,7 +23,7 @@ export function CaseHero({ project, ui }: { project: CaseStudy; ui: SiteContent[
         href="/#projets"
         className="group inline-flex items-center gap-2 text-label font-medium text-fg-muted transition-colors hover:text-fg"
       >
-        <span aria-hidden className="transition-transform duration-500 ease-spring group-hover:-translate-x-1">
+        <span aria-hidden className="transition-transform duration-500 ease-spring group-hover:-translate-x-1 group-active:-translate-x-1">
           ←
         </span>
         {ui.allProjects}

@@ -27,6 +27,8 @@ export function PortraitSticker({ alt, className }: { alt: string; className?: s
       <motion.div
         className={`absolute inset-0 ${fine ? "cursor-grab active:cursor-grabbing" : ""}`}
         whileHover={{ y: -4 }}
+        // Tactile : le dessin s'enfonce sous le doigt, puis se redessine
+        whileTap={{ scale: 0.97 }}
         whileDrag={{ rotate: 3, scale: 1.03 }}
         drag={fine}
         dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}

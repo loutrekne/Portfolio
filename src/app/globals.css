@@ -73,6 +73,9 @@
   html {
     color-scheme: light dark;
     scroll-behavior: smooth;
+    /* Pas de rectangle gris au tap (iOS / Android) : nos éléments ont leur
+       propre retour visuel à l'appui (:active). */
+    -webkit-tap-highlight-color: transparent;
   }
   :root[data-theme="light"] {
     color-scheme: light;
@@ -129,6 +132,12 @@
    MICRO-INTERACTIONS
    Principe : chaque mouvement répond à un geste (survol, clic, scroll) et
    confirme quelque chose. Rien ne bouge "pour décorer".
+
+   TACTILE : les effets de SURVOL sont réservés aux appareils qui savent
+   survoler (@media (hover: hover)). Sinon, sur mobile, un tap laisse l'effet
+   « collé » jusqu'au tap suivant. Sur écran tactile, c'est l'APPUI (:active)
+   qui déclenche le retour visuel. Les variantes Tailwind `hover:` sont déjà
+   protégées ainsi (Tailwind v4) ; ici on fait pareil pour les utilitaires maison.
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* 1 · Coup de surligneur — liens et titres cliquables.
@@ -142,10 +151,16 @@
   transition: background-size var(--duration-spring) var(--ease-spring);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
-  :where(a, button, .group):hover &,
+  @media (hover: hover) {
+    :where(a, button, .group):hover &,
+    &:is(a):hover {
+      background-size: 100% 0.42em;
+    }
+  }
   :where(a, button, .group):focus-visible &,
-  &:is(a):hover,
-  &:is(a):focus-visible {
+  :where(a, button, .group):active &,
+  &:is(a):focus-visible,
+  &:is(a):active {
     background-size: 100% 0.42em;
   }
 }
@@ -167,9 +182,14 @@
     background-color var(--duration-fast) var(--ease-standard),
     border-color var(--duration-fast) var(--ease-standard),
     box-shadow var(--duration-base) var(--ease-standard);
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-soft);
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft);
+    }
+    &:hover .arrow {
+      transform: translateX(4px);
+    }
   }
   &:active {
     transform: translateY(0) scale(0.96);
@@ -179,7 +199,7 @@
     display: inline-block;
     transition: transform var(--duration-spring) var(--ease-spring);
   }
-  &:hover .arrow {
+  &:active .arrow {
     transform: translateX(4px);
   }
 }
@@ -222,10 +242,17 @@
     transform var(--duration-spring) var(--ease-spring),
     border-color var(--duration-base) var(--ease-standard),
     box-shadow var(--duration-base) var(--ease-standard);
-  &:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-strong);
-    box-shadow: var(--shadow-soft);
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-soft);
+    }
+  }
+  /* Tactile : la carte s'enfonce légèrement sous le doigt */
+  &:active {
+    transform: scale(0.985);
+    transition-duration: 120ms;
   }
 }
 
@@ -252,8 +279,14 @@
     stroke-dashoffset var(--duration-spring) var(--ease-standard),
     opacity 0.1s;
 }
-:where(a, button, .group):hover .drawn-ul path,
-:where(a, button, .group):focus-visible .drawn-ul path {
+@media (hover: hover) {
+  :where(a, button, .group):hover .drawn-ul path {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+:where(a, button, .group):focus-visible .drawn-ul path,
+:where(a, button, .group):active .drawn-ul path {
   stroke-dashoffset: 0;
   opacity: 1;
 }

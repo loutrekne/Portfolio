@@ -50,12 +50,12 @@ export function ProjectRows({ rows, cursorLabel }: { rows: ProjectRow[]; cursorL
       >
         {rows.map((p) => (
           <li key={p.slug} className="reveal">
-            <motion.div initial="rest" animate="rest" whileHover="hover">
+            <motion.div initial="rest" animate="rest" whileHover="hover" whileTap="hover">
               <Link
                 href={`/projets/${p.slug}`}
-                className="group grid gap-3 rounded-md px-4 py-8 transition-colors duration-300 hover:bg-surface sm:grid-cols-[3.5rem_1fr_auto] sm:gap-6 sm:px-6"
+                className="group grid gap-3 rounded-md px-4 py-8 transition-colors duration-300 hover:bg-surface active:bg-surface sm:grid-cols-[3.5rem_1fr_auto] sm:gap-6 sm:px-6"
               >
-                <span className="text-label font-medium text-accent tabular-nums transition-transform duration-500 ease-spring group-hover:translate-x-1">
+                <span className="text-label font-medium text-accent tabular-nums transition-transform duration-500 ease-spring group-hover:translate-x-1 group-active:translate-x-1">
                   {p.index}
                 </span>
                 <div>

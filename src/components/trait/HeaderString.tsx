@@ -8,8 +8,9 @@ import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } fro
  * Quand la souris passe tout près, la corde se courbe vers elle et se teinte
  * de terracotta ; quand la souris s'éloigne, elle revient en vibrant
  * (ressort peu amorti), comme une corde de guitare qu'on pince.
- * Souris uniquement : rien sur écran tactile, ligne immobile si l'utilisateur
- * préfère moins d'animations.
+ * Écran tactile : un tap dans l'en-tête PINCE la corde à l'endroit du doigt,
+ * elle vibre puis se calme.
+ * Ligne immobile si l'utilisateur préfère moins d'animations.
  */
 const REACH = 56; // distance (px) à laquelle la souris "attrape" la corde
 const MAX_BEND = 22; // courbure maximale (px)
@@ -38,10 +39,24 @@ export function HeaderString() {
       }
     };
     const onLeave = () => bendTarget.set(0);
+    // Tactile : pincer la corde quand on tape dans l'en-tête
+    let release: ReturnType<typeof setTimeout>;
+    const onDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" || !ref.current) return;
+      const r = ref.current.getBoundingClientRect();
+      if (e.clientY > r.top + r.height / 2) return; // tap sous la corde : on ignore
+      x.set(((e.clientX - r.left) / r.width) * 1000);
+      bendTarget.set(-MAX_BEND * 0.8);
+      clearTimeout(release);
+      release = setTimeout(() => bendTarget.set(0), 110);
+    };
     window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("pointerdown", onDown, { passive: true });
     document.addEventListener("pointerleave", onLeave);
     return () => {
+      clearTimeout(release);
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerdown", onDown);
       document.removeEventListener("pointerleave", onLeave);
     };
   }, [reduce, x, bendTarget]);

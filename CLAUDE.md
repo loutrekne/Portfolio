@@ -97,6 +97,7 @@ Node ≥ 20.9. Ne pas passer à TypeScript 7 sans vérifier la compatibilité Ne
 **Accessibilité & perf**
 12. WCAG AA minimum (contrastes vérifiés dans `docs/design-system.md`), focus visible, navigation clavier, `alt` descriptifs, `prefers-reduced-motion` respecté.
 13. Toutes les pages sont statiques. Images via `next/image` avec `width/height`.
+13 bis. **Tactile** : tout effet de survol fait maison est enveloppé dans `@media (hover: hover)` (sinon il reste « collé » après un tap) et a son équivalent à l'appui (`:active`, `group-active:`, `whileTap` côté Motion). Les variantes Tailwind `hover:` sont déjà protégées. Le correctif iOS pour `:active` est dans `MotionProvider`.
 
 **Code**
 14. Server Components par défaut. `"use client"` uniquement pour une interaction réelle.
@@ -158,5 +159,5 @@ Le motif du site est **le trait dessiné à la main**, en terracotta, qui prolon
 | `PortraitDrawing` | Le dessin qui se trace (contours de haut en bas, puis l'encre), puis cligne des yeux et suit la souris ; un clic le redessine. Option `wash` : passage terracotta décalé. Encre = `--portrait-ink` (toujours encre : un dessin inversé en blanc donne un négatif). Données générées dans `portrait-paths.ts` |
 | `ProjectRows` | Liste des projets : titre souligné au survol + pastille « Voir le projet → » qui suit la souris |
 
-Règles : un trait répond à un geste ou accompagne une arrivée, jamais en boucle. Sur écran tactile, pas de pastille ni de glisser. Les tracés utilisent `pathLength={1}` + `strokeDashoffset` **sans** `vector-effect="non-scaling-stroke"` (Chrome découpe le trait en pointillés sinon).
+Règles : un trait répond à un geste ou accompagne une arrivée, jamais en boucle. Sur écran tactile, pas de pastille ni de glisser ; un tap dans l'en-tête pince la corde (HeaderString). Les tracés utilisent `pathLength={1}` + `strokeDashoffset` **sans** `vector-effect="non-scaling-stroke"` (Chrome découpe le trait en pointillés sinon).
 
